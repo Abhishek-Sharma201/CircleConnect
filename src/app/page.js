@@ -7,7 +7,7 @@ import { useAuth } from "../hooks/useAuth";
 const page = () => {
   const { user } = useAuth();
 
-  return <Link href={`/${user.name}`}>Dashboard</Link>;
+  return <Link href={`/${user?.name}`}>Dashboard</Link>;
 };
 
 export default page;
