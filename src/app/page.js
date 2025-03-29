@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import React from "react";
+import { useAuth } from "../hooks/useAuth";
 
 const page = () => {
-  return <Link href={"/abhishek"}>Dashboard</Link>;
+  const { user } = useAuth();
+
+  return <Link href={`/${user.name}`}>Dashboard</Link>;
 };
 
 export default page;
