@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/app/hooks/useAuth";
+import { useAuth } from "@/src/hooks/useAuth";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import React, { useState } from "react";
