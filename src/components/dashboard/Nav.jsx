@@ -34,7 +34,7 @@ const Nav = () => {
           {path ? path : "/"}
         </h1>
         <span className="h-full w-[1px] bg-zinc-700" />
-        <h1>Hi, {user.name}</h1>
+        <h1>Hi, {user?.name}</h1>
       </div>
       <div className="w-[max-content] h-full flex items-center justify-center gap-6 relative">
         {/* Search Input and Button Container */}
@@ -70,7 +70,7 @@ const Nav = () => {
           </li>
           <li
             className="cursor-pointer p-2 rounded-md hover:bg-zinc-800"
-            onClick={() => router.push(`/${user.name}/profile`)}
+            onClick={() => router.push(`/${user?.name}/profile`)}
           >
             <div className="h-[max-content] w-[max-content] flex flex-col items-center justify-center p-[1.5px] border-[1px] border-blue-800 rounded-full">
               <Image
