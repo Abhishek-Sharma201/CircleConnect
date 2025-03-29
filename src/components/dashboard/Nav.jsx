@@ -74,7 +74,7 @@ const Nav = () => {
           >
             <div className="h-[max-content] w-[max-content] flex flex-col items-center justify-center p-[1.5px] border-[1px] border-blue-800 rounded-full">
               <Image
-                src={user.picture || "/assets/pic1.jpg"}
+                src={user?.picture || "/assets/pic1.jpg"}
                 alt="proPic"
                 height={40}
                 width={40}

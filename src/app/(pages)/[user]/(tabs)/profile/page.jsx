@@ -1,16 +1,19 @@
 import Badge from "@/src/components/dashboard/Badge";
 import PostCard from "@/src/components/dashboard/PostCard";
+import { useAuth } from "@/src/hooks/useAuth";
 import { DummyBadges, DummyPosts } from "@/src/utils/dummyData";
 import Image from "next/image";
 import React from "react";
 
 const page = () => {
+  const { user } = useAuth();
+
   return (
     <div className=" w-full h-full flex items-start justify-start py-3 px-2 gap-2 overflow-y-scroll ">
       <form className="w-auto h-full flex flex-col items-center justify-start px-3 gap-8">
         <div className=" h-[max-content] w-[max-content] flex flex-col items-center justify-center p-1 border-[3px] border-blue-900 rounded-full ">
           <Image
-            src={"/assets/pic1.jpg"}
+            src={user?.picture || "/assets/pic1.jpg"}
             alt="proPic"
             height={140}
             width={140}
