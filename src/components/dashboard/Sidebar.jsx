@@ -4,9 +4,28 @@ import React, { useState } from "react";
 import Name from "./Name";
 import { Logout, Moon, ToggleIcon } from "@/src/utils/SVG";
 import Link from "next/link";
+import { useAuth } from "@/src/hooks/useAuth";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const router = useRouter();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      const response = await logout();
+      if (response.success) {
+        toast.success("Logout successful!");
+        router.push("/login");
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div
@@ -96,6 +115,7 @@ const Sidebar = () => {
         className={`w-full ${isOpen ? "px-4" : "px-2"} py-2 flex items-center ${
           isOpen ? "justify-between" : "justify-center"
         } rounded-md border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 hover:border-zinc-700`}
+        onClick={handleLogout}
       >
         {isOpen ? (
           <>
