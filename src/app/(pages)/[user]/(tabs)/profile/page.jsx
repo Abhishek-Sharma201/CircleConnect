@@ -5,10 +5,27 @@ import PostCard from "@/src/components/dashboard/PostCard";
 import { useAuth } from "@/src/hooks/useAuth";
 import { DummyBadges, DummyPosts } from "@/src/utils/dummyData";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 const page = () => {
   const { user } = useAuth();
+
+  const [form, setForm] = useState({
+    userName: user?.userName,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    email: user?.email,
+    headLine: user?.headLine,
+    about: user?.about,
+  });
+
+  const change = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const submit = async (e) => {};
 
@@ -34,7 +51,8 @@ const page = () => {
               type="text"
               name="fName"
               id="fName"
-              value={user?.firstName || "-"}
+              value={form.firstName}
+              onChange={change}
               placeholder="first name"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
@@ -46,7 +64,8 @@ const page = () => {
               type="text"
               name="lName"
               id="lName"
-              value={user?.lastName || "-"}
+              value={form.lastName}
+              onChange={change}
               placeholder="last name"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
@@ -58,7 +77,8 @@ const page = () => {
               type="email"
               name="email"
               id="email"
-              value={user?.email || "-"}
+              value={form.email}
+              onChange={change}
               placeholder="email"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
@@ -71,7 +91,8 @@ const page = () => {
               name="username"
               id="username"
               placeholder="username"
-              value={user?.userName}
+              value={form.userName}
+              onChange={change}
               readOnly={true}
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
             />
@@ -82,7 +103,8 @@ const page = () => {
               type="text"
               name="headline"
               id="headline"
-              value={user?.headLine || "-"}
+              value={form.headLine}
+              onChange={change}
               placeholder="head line"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
@@ -94,14 +116,20 @@ const page = () => {
               type="text"
               name="about"
               id="about"
-              value={user?.about || "-"}
+              value={form.about}
+              onChange={change}
               placeholder="about"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
             />
           </div>
         </div>
-        <button type="submit">Save</button>
+        <button
+          type="submit"
+          className=" bg-blue-600 text-white text-[.8rem] rounded-md px-4 py-1 "
+        >
+          Save
+        </button>
       </form>
       <hr className="w-[1px] h-full bg-zinc-800 border-none dark:bg-zinc-700" />
       <div className="  w-full h-full flex flex-col items-start justify-start gap-6 ">
