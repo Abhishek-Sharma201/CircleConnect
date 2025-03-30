@@ -4,7 +4,7 @@ import { DummyUsers, MainUser } from "@/src/utils/dummyData";
 import { Bell, Search } from "@/src/utils/SVG";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import SearchList from "./SearchList";
 import { useAuth } from "@/src/hooks/useAuth";
 
@@ -37,7 +37,6 @@ const Nav = () => {
         <h1>Hi, {user?.firstName}</h1>
       </div>
       <div className="w-[max-content] h-full flex items-center justify-center gap-6 relative">
-        {/* Search Input and Button Container */}
         <div className="w-[max-content] h-full flex flex-col items-center justify-center">
           <div className="w-[max-content] h-full flex items-center justify-center rounded-md border gap-2 p-1 border-zinc-800">
             <button className="h-full px-2 bg-blue-700 hover:bg-zinc-800 rounded-md">
@@ -70,7 +69,7 @@ const Nav = () => {
           </li>
           <li
             className="cursor-pointer p-2 rounded-md hover:bg-zinc-800"
-            onClick={() => router.push(`/${user?.name}/profile`)}
+            onClick={() => router.push(`/${user?.userName}/profile`)}
           >
             <div className="h-[max-content] w-[max-content] flex flex-col items-center justify-center p-[1.5px] border-[1px] border-blue-800 rounded-full">
               <Image
