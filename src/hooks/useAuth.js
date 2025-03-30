@@ -123,7 +123,6 @@ export const useAuth = () => {
       const data = await response.json();
 
       if (data.success) {
-        // Set authentication status and user in context
         setUser(data.user);
         localStorage.setItem("token", data.token);
       }

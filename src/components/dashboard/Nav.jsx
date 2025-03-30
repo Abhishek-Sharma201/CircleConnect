@@ -1,10 +1,10 @@
 "use client";
 
-import { DummyUsers, MainUser } from "@/src/utils/dummyData";
+import { apiURL } from "@/src/constants";
 import { Bell, Search } from "@/src/utils/SVG";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import SearchList from "./SearchList";
 import { useAuth } from "@/src/hooks/useAuth";
 
@@ -16,15 +16,25 @@ const Nav = () => {
   const { user } = useAuth();
 
   const handleChange = async (e) => {
-    const newValue = e.target.value.toLowerCase();
+    const newValue = e.target.value;
     setValue(newValue);
-    console.log(newValue);
 
-    const users = DummyUsers.filter((user) =>
-      user.name.toLowerCase().includes(newValue)
-    );
-    setMatchedUsers(users);
-    console.log(users);
+    if (newValue.trim().length > 0) {
+      try {
+        const response = await fetch(`${apiURL}/api/search/get/${newValue}`);
+        const data = await response.json();
+        if (data.success) {
+          setMatchedUsers(data.users);
+        } else {
+          setMatchedUsers([]);
+        }
+      } catch (error) {
+        console.error("Search API error:", error);
+        setMatchedUsers([]);
+      }
+    } else {
+      setMatchedUsers([]);
+    }
   };
 
   return (
@@ -69,7 +79,7 @@ const Nav = () => {
           </li>
           <li
             className="cursor-pointer p-2 rounded-md hover:bg-zinc-800"
-            onClick={() => router.push(`/${user?.userName}/profile`)}
+            onClick={() => router.push(`/dashboard/profile`)}
           >
             <div className="h-[max-content] w-[max-content] flex flex-col items-center justify-center p-[1.5px] border-[1px] border-blue-800 rounded-full">
               <Image
