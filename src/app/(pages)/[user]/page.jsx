@@ -10,7 +10,10 @@ const Page = ({ params }) => {
 
   const fetchUser = async () => {
     try {
-      const fe = await fetch(`${apiURL}/api/search/get/${username}`);
+      const fe = await fetch(`${apiURL}/api/search/get/${username}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
       const res = await fe.json();
       setFetchedUser(res.user);
     } catch (error) {
