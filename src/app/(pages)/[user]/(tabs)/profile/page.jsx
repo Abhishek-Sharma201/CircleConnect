@@ -9,7 +9,6 @@ import Image from "next/image";
 
 const Page = () => {
   const { user, loading } = useAuth();
-
   const [form, setForm] = useState({
     userName: "",
     firstName: "",
@@ -42,7 +41,7 @@ const Page = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    // Handle submit
+    console.log("Submitting form:", form);
   };
 
   if (loading) {
@@ -58,7 +57,7 @@ const Page = () => {
         <div className="h-[max-content] w-[max-content] flex flex-col items-center justify-center p-1 border-[3px] border-blue-900 rounded-full">
           <Image
             src={user?.picture || "/assets/pic1.jpg"}
-            alt="proPic"
+            alt="Profile Picture"
             height={140}
             width={140}
             className="rounded-full"
@@ -109,7 +108,7 @@ const Page = () => {
               value={form.userName}
               onChange={change}
               placeholder="username"
-              readOnly={true}
+              readOnly
               className="bg-transparent text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700"
             />
           </div>
@@ -151,7 +150,7 @@ const Page = () => {
           <h1>Your Skill Badges</h1>
           <div className="flex flex-wrap gap-4">
             {DummyBadges.map((v) => (
-              <Badge {...v} key={v._id} />
+              <Badge key={v._id} {...v} />
             ))}
           </div>
         </div>
@@ -160,7 +159,7 @@ const Page = () => {
           <h1>Posts</h1>
           <div className="grid grid-cols-2 gap-8">
             {DummyPosts.map((v) => (
-              <PostCard {...v} key={v._id} />
+              <PostCard key={v._id} {...v} />
             ))}
           </div>
         </div>
