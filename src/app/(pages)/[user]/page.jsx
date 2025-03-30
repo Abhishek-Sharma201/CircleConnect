@@ -1,4 +1,4 @@
-// app/[user]/page.jsx
+"use client";
 
 import { apiURL } from "@/src/constants";
 import React, { useEffect, useState } from "react";
