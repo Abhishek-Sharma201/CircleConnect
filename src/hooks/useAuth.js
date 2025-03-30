@@ -5,12 +5,13 @@
 import { useEffect, useState } from "react";
 import { apiURL } from "../constants";
 import dotenv from "dotenv";
+import { useUser } from "../context/userContex";
 
 dotenv.config();
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const { user, setUser } = useUser();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -85,6 +86,30 @@ export const useAuth = () => {
     }
   };
 
+  // const googleLogin = async (token) => {
+  //   try {
+  //     const response = await fetch(`${apiURL}/api/auth/google`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ token }),
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (data.success) {
+  //       setIsAuthenticated(true);
+  //       setUser(data.user);
+  //       localStorage.setItem("token", data.token);
+  //     }
+
+  //     return data;
+  //   } catch (error) {
+  //     return { success: false, message: "Google Login failed" };
+  //   }
+  // };
+
   const googleLogin = async (token) => {
     try {
       const response = await fetch(`${apiURL}/api/auth/google`, {
@@ -98,7 +123,7 @@ export const useAuth = () => {
       const data = await response.json();
 
       if (data.success) {
-        setIsAuthenticated(true);
+        // Set authentication status and user in context
         setUser(data.user);
         localStorage.setItem("token", data.token);
       }

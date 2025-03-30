@@ -34,7 +34,7 @@ const Nav = () => {
           {path ? path : "/"}
         </h1>
         <span className="h-full w-[1px] bg-zinc-700" />
-        <h1>Hi, {user?.name}</h1>
+        <h1>Hi, {user?.firstName}</h1>
       </div>
       <div className="w-[max-content] h-full flex items-center justify-center gap-6 relative">
         {/* Search Input and Button Container */}
