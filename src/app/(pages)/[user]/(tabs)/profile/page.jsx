@@ -1,3 +1,5 @@
+"use client";
+
 import Badge from "@/src/components/dashboard/Badge";
 import PostCard from "@/src/components/dashboard/PostCard";
 import { useAuth } from "@/src/hooks/useAuth";
@@ -55,12 +57,12 @@ const page = () => {
             />
           </div>
           <div className=" h-[max-content] w-[max-content] flex flex-col items-start justify-center gap-2 ">
-            <h6 className=" ml-2 text-[.8rem] text-zinc-300 ">Phone no.</h6>
+            <h6 className=" ml-2 text-[.8rem] text-zinc-300 ">Username</h6>
             <input
-              type="tel"
-              name="phone"
-              id="phone"
-              placeholder="phone"
+              type="text"
+              name="username"
+              id="username"
+              placeholder="username"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
             />

@@ -40,14 +40,14 @@ export const useAuth = () => {
     checkAuth();
   }, []);
 
-  const signup = async (name, email, password) => {
+  const signup = async (form) => {
     try {
       const response = await fetch(`${apiURL}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ ...form }),
       });
 
       if (response.status === 409)
