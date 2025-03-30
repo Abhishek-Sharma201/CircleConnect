@@ -10,9 +10,14 @@ import React from "react";
 const page = () => {
   const { user } = useAuth();
 
+  const submit = async (e) => {};
+
   return (
     <div className=" w-full h-full flex items-start justify-start py-3 px-2 gap-2 overflow-y-scroll ">
-      <form className="w-auto h-full flex flex-col items-center justify-start px-3 gap-8">
+      <form
+        onSubmit={submit}
+        className="w-auto h-full flex flex-col items-center justify-start px-3 gap-8"
+      >
         <div className=" h-[max-content] w-[max-content] flex flex-col items-center justify-center p-1 border-[3px] border-blue-900 rounded-full ">
           <Image
             src={user?.picture || "/assets/pic1.jpg"}
@@ -29,6 +34,7 @@ const page = () => {
               type="text"
               name="fName"
               id="fName"
+              value={user?.firstName || "-"}
               placeholder="first name"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
@@ -40,6 +46,7 @@ const page = () => {
               type="text"
               name="lName"
               id="lName"
+              value={user?.lastName || "-"}
               placeholder="last name"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
@@ -51,6 +58,7 @@ const page = () => {
               type="email"
               name="email"
               id="email"
+              value={user?.email || "-"}
               placeholder="email"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
@@ -63,8 +71,9 @@ const page = () => {
               name="username"
               id="username"
               placeholder="username"
+              value={user?.userName}
+              readOnly={true}
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
-              required
             />
           </div>
           <div className=" h-[max-content] w-[max-content] flex flex-col items-start justify-center gap-2 ">
@@ -73,6 +82,7 @@ const page = () => {
               type="text"
               name="headline"
               id="headline"
+              value={user?.headLine || "-"}
               placeholder="head line"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
@@ -84,12 +94,14 @@ const page = () => {
               type="text"
               name="about"
               id="about"
+              value={user?.about || "-"}
               placeholder="about"
               className=" bg-transparent text-zinc-300 placeholder:text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700 "
               required
             />
           </div>
         </div>
+        <button type="submit">Save</button>
       </form>
       <hr className="w-[1px] h-full bg-zinc-800 border-none dark:bg-zinc-700" />
       <div className="  w-full h-full flex flex-col items-start justify-start gap-6 ">

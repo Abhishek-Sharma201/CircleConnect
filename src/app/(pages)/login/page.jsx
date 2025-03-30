@@ -8,7 +8,7 @@ import Link from "next/link";
 import { GoogleLogin } from "@react-oauth/google";
 
 const page = () => {
-  const { login, googleLogin } = useAuth();
+  const { login, googleLogin, user } = useAuth();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -18,7 +18,7 @@ const page = () => {
     const response = await login(email, password);
     if (response.success) {
       toast.success("Login successful!");
-      router.push("/");
+      router.push(`/${user?.userName}`);
     } else {
       toast.error(response.message);
     }
@@ -28,7 +28,7 @@ const page = () => {
     const response = await googleLogin(creds.credential);
     if (response.success) {
       toast.success("Google Login successful!");
-      router.push("/");
+      router.push(`/${user?.userName}`);
     } else {
       toast.error(response.message);
     }
