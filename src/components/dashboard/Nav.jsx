@@ -25,6 +25,7 @@ const Nav = () => {
         const data = await response.json();
         if (data.success) {
           setMatchedUsers(data.users);
+          console.log(matchedUsers);
         } else {
           setMatchedUsers([]);
         }
