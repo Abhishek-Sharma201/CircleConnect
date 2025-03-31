@@ -21,8 +21,9 @@ const Page = () => {
       if (!res.ok) {
         throw new Error(json.message);
       }
-      setData(json.user);
-      console.log(json.user);
+      const userData = Array.isArray(json.user) ? json.user[0] : json.user;
+      setData(userData);
+      console.log(userData);
       toast.success(json.message);
     } catch (error) {
       toast.error(error.message);
@@ -38,7 +39,7 @@ const Page = () => {
   }, [userParam]);
 
   return (
-    <div className=" w-full h-full flex flex-col items-start justify-start py-3 px-2 gap-2 overflow-y-scroll ">
+    <div className="w-full h-full flex flex-col items-start justify-start py-3 px-2 gap-2 overflow-y-scroll">
       <div className="h-[max-content] w-[max-content] flex flex-col items-center justify-center p-1 border-[3px] border-blue-900 rounded-full">
         <Image
           src={data?.picture || "/assets/pic1.jpg"}
@@ -48,21 +49,21 @@ const Page = () => {
           className="rounded-full"
         />
       </div>
-      <div className=" h-[max-content] w-[400px] flex flex-col items-start justify-start p-2 gap-2 ">
+      <div className="h-[max-content] w-[400px] flex flex-col items-start justify-start p-2 gap-2">
         <h1>{data?.userName}</h1>
         <h3>{data?.firstName + " " + data?.lastName}</h3>
         <h4>{data?.headLine}</h4>
         <p>{data?.about}</p>
       </div>
-      <div className=" w-full h-[max-content] flex items-start justify-start flex-wrap gap-4 ">
-        {data?.badges?.map((v, i) => {
-          return <Badge key={v._id} {...v} />;
-        })}
+      <div className="w-full h-[max-content] flex items-start justify-start flex-wrap gap-4">
+        {data?.badges?.map((v) => (
+          <Badge key={v._id} {...v} />
+        ))}
       </div>
-      <div className=" w-full h-[max-content] flex items-start justify-start flex-wrap gap-4 ">
-        {data?.posts?.map((v, i) => {
-          return <PostCard key={v._id} {...v} />;
-        })}
+      <div className="w-full h-[max-content] flex items-start justify-start flex-wrap gap-4">
+        {data?.posts?.map((v) => (
+          <PostCard key={v._id} {...v} />
+        ))}
       </div>
     </div>
   );
