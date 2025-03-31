@@ -5,9 +5,7 @@ import React from "react";
 import { useAuth } from "../hooks/useAuth";
 
 const page = () => {
-  const { user } = useAuth();
-
-  return <Link href={`/${user?.name}`}>Dashboard</Link>;
+  return <Link href={`/dashboard`}>Dashboard</Link>;
 };
 
 export default page;

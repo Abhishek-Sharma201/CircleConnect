@@ -68,7 +68,11 @@ const Nav = () => {
             <div className="absolute left-[3rem] top-full mt-2 w-[315px] border border-zinc-700 rounded-md shadow-lg z-10 backdrop-blur-md gap-1">
               <ul>
                 {matchedUsers.map((user) => (
-                  <SearchList key={user._id} {...user} />
+                  <SearchList
+                    key={user._id}
+                    {...user}
+                    onClick={() => router.push(`/dashboard/${user.userName}`)}
+                  />
                 ))}
               </ul>
             </div>

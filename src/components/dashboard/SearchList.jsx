@@ -1,9 +1,12 @@
 import Image from "next/image";
 import React from "react";
 
-const SearchList = ({ picture, userName, headLine }) => {
+const SearchList = ({ picture, userName, headLine, onClick }) => {
   return (
-    <div className=" w-[315px] h-[7dvh] flex items-center justify-start p-1 border border-zinc-700 rounded-md gap-3 cursor-pointer hover:bg-zinc-950 ">
+    <div
+      className=" w-[315px] h-[7dvh] flex items-center justify-start p-1 border border-zinc-700 rounded-md gap-3 cursor-pointer hover:bg-zinc-950 "
+      onClick={onClick}
+    >
       <Image
         src={picture || ""}
         alt="pic"
