@@ -59,7 +59,7 @@ const Page = () => {
       return;
     }
     try {
-      const res = await fetch(`${apiURL}/api/badges/post`, {
+      const res = await fetch(`${apiURL}/api/badge/post`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const Page = () => {
 
   const fetchBadges = async () => {
     try {
-      const f = await fetch(`${apiURL}/api/badges/get/${user?.id}`);
+      const f = await fetch(`${apiURL}/api/badge/get/${user?.id}`);
       const j = await f.json();
       if (!f.ok) toast.error(j.message);
       setBadges(j.badges);
