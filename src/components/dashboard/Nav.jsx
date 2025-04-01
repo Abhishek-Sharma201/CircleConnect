@@ -48,7 +48,7 @@ const Nav = () => {
         <span className="h-full w-[1px] bg-zinc-700" />
         <h1>
           <span className=" text-[.9rem] text-zinc-300 "> Welcome, </span>
-          {user?.firstName + "     " + user?.lastName}
+          {user?.firstName + " " + user?.lastName}
         </h1>
       </div>
       <div className="w-[max-content] h-full flex items-center justify-center gap-6 relative">
@@ -67,7 +67,7 @@ const Nav = () => {
               name="search"
               id="search"
               placeholder="Search here..."
-              className="h-full w-[300px] px-1 bg-transparent border-none outline-none placeholder:text-zinc-300 placeholder:text-[.8rem] text-zinc-300 text-[.8rem]"
+              className="h-full w-[300px] px-1 bg-transparent border-none outline-none placeholder:text-zinc-300 placeholder:text-[.9rem] text-zinc-300 text-[.8rem]"
               onChange={handleChange}
               value={value}
             />

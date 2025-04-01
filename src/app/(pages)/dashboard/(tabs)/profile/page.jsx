@@ -6,6 +6,8 @@ import PostCard from "@/src/components/dashboard/PostCard";
 import { useAuth } from "@/src/hooks/useAuth";
 import { DummyBadges, DummyPosts } from "@/src/utils/dummyData";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import { apiURL } from "@/src/constants";
 
 const Page = () => {
   const { user, loading } = useAuth();
@@ -17,6 +19,9 @@ const Page = () => {
     headLine: "",
     about: "",
   });
+  const [openInp, setOpenInp] = useState(false);
+  const [newBadge, setNewBadge] = useState("");
+  const [badges, setBadges] = useState([]);
 
   useEffect(() => {
     if (user) {
@@ -44,8 +49,61 @@ const Page = () => {
     console.log("Submitting form:", form);
   };
 
+  const handleNewBadgeChange = (e) => {
+    setNewBadge(e.target.value);
+  };
+
+  const addBadge = async () => {
+    if (!newBadge.trim()) {
+      toast.error("Badge name cannot be empty");
+      return;
+    }
+    try {
+      const res = await fetch(`${apiURL}/api/badges/post`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postedBy: user?._id,
+          name: newBadge,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
+      toast.success(data.message);
+      setBadges((prev) => [...prev, data.badge]);
+      setNewBadge("");
+      setOpenInp(false);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const fetchBadges = async () => {
+    try {
+      const f = await fetch(`${apiURL}/api/badges/get/${user?.id}`);
+      const j = await f.json();
+      if (!f.ok) toast.error(j.message);
+      setBadges(j.badges);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchBadges();
+  }, [user]);
+
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className=" h-full w-full flex items-center justify-center gap-4 ">
+        <div className=" h-[20px] w-[20px] border-[3px] border-zinc-800 border-t-blue-500 rounded-full animate-spin "></div>
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -148,21 +206,52 @@ const Page = () => {
       </form>
       <hr className="w-[1px] h-full bg-zinc-800 border-none dark:bg-zinc-700" />
       <div className="w-full h-full flex flex-col items-start gap-6 px-3 overflow-x-hidden overflow-y-scroll">
-        <div className="w-[max-content] flex flex-col items-start gap-5 px-4">
-          <h1>Your Skill Badges</h1>
+        <div className="w-full flex flex-col items-start gap-3 px-4">
+          <h1>Your Badges</h1>
           <div className="flex flex-wrap gap-4">
-            {DummyBadges.map((v) => (
+            {badges.map((v) => (
               <Badge key={v._id} {...v} />
             ))}
+            {openInp && (
+              <div className="flex gap-2 items-center">
+                <input
+                  type="text"
+                  name="newBadge"
+                  id="newBadge"
+                  placeholder="name?"
+                  value={newBadge}
+                  onChange={handleNewBadgeChange}
+                  className="h-full w-[100px] px-3 rounded-md border border-zinc-600 bg-zinc-950 text-zinc-400 text-[.9rem]"
+                />
+                <button
+                  type="button"
+                  className="rounded-md text-center  bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
+                   bg-[length:200%_100%] 
+                   animate-gradient-shadow text-[.9rem] py-[6px] px-3 outline-none h-[max-content]"
+                  onClick={addBadge}
+                >
+                  Add
+                </button>
+              </div>
+            )}
             <button
               type="button"
-              className=" rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
+              className={`rounded-md text-center bg-gradient-to-r ${
+                openInp
+                  ? "from-red-900 via-red-600 to-red-700 "
+                  : "from-blue-900 via-blue-600 to-blue-700 "
+              }
              bg-[length:200%_100%] 
-             animate-gradient-shadow text-[.9rem] py-[7px] px-3 outline-none h-[max-content] "
+             animate-gradient-shadow text-[.9rem] py-[7px] px-3 outline-none h-[max-content]`}
+              onClick={() => setOpenInp(!openInp)}
             >
-              + Add more
+              {openInp ? "cancel" : "+ Create"}
             </button>
           </div>
+          <h6 className="text-[10px] text-zinc-400">
+            <span className="text-orange-400">NOTE</span> : Your Badges describe
+            you more
+          </h6>
         </div>
         <hr className="w-full h-[1px] bg-zinc-800 border-none dark:bg-zinc-700" />
         <div className="w-full flex flex-col items-start gap-6 px-3 overflow-y-scroll">
