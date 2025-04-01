@@ -11,6 +11,19 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      keyframes: {
+        gradient: {
+          "0%, 100%": { "background-position": "0% 50%" },
+          "50%": { "background-position": "100% 50%" },
+        },
+        shadow: {
+          '0%, 100%': { 'box-shadow': '0 0 3px rgba(29, 78, 216, 1)' },
+          '50%': { 'box-shadow': '0 0 3px rgba(255, 255, 255, 1)' },
+        },
+      },
+      animation: {
+        "gradient-shadow": "gradient 2.5s ease infinite, shadow 5s ease infinite",
+      },
     },
   },
   plugins: [],

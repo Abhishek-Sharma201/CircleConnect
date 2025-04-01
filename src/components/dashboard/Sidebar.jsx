@@ -38,7 +38,9 @@ const Sidebar = () => {
         {isOpen ? <Name /> : ""}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className=" rounded-md border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 p-2 "
+          className=" rounded-sm bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
+             bg-[length:200%_100%] 
+             animate-gradient-shadow text-[.9rem] py-1 px-1 outline-none h-[max-content] "
         >
           <ToggleIcon />
         </button>

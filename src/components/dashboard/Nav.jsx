@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import SearchList from "./SearchList";
 import { useAuth } from "@/src/hooks/useAuth";
+import Link from "next/link";
 
 const Nav = () => {
   const path = usePathname();
@@ -45,12 +46,19 @@ const Nav = () => {
           {path ? path : "/"}
         </h1>
         <span className="h-full w-[1px] bg-zinc-700" />
-        <h1>Hi, {user?.firstName}</h1>
+        <h1>
+          <span className=" text-[.9rem] text-zinc-300 "> Welcome, </span>
+          {user?.firstName + "     " + user?.lastName}
+        </h1>
       </div>
       <div className="w-[max-content] h-full flex items-center justify-center gap-6 relative">
         <div className="w-[max-content] h-full flex flex-col items-center justify-center">
           <div className="w-[max-content] h-full flex items-center justify-center rounded-md border gap-2 p-1 border-zinc-800">
-            <button className="h-full px-2 bg-blue-700 hover:bg-zinc-800 rounded-md">
+            <button
+              className="h-full  rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
+             bg-[length:200%_100%] 
+             animate-gradient-shadow text-[.9rem] py-1 px-2 outline-none"
+            >
               <Search />
             </button>
             <span className="h-full w-[1px] bg-zinc-700" />
@@ -82,11 +90,11 @@ const Nav = () => {
           <li className="cursor-pointer p-2 border border-zinc-800 rounded-md hover:bg-zinc-800">
             <Bell />
           </li>
-          <li
+          <Link
             className="cursor-pointer p-2 rounded-md hover:bg-zinc-800"
-            onClick={() => router.push(`/dashboard/profile`)}
+            href={`/dashboard/profile`}
           >
-            <div className="h-[max-content] w-[max-content] flex flex-col items-center justify-center p-[1.5px] border-[1px] border-blue-800 rounded-full">
+            <div className="h-[max-content] w-[max-content] flex flex-col items-center justify-center p-[1.5px] border-[1px] border-blue-600 rounded-full">
               <Image
                 src={user?.picture || "/assets/pic1.jpg"}
                 alt="proPic"
@@ -95,7 +103,7 @@ const Nav = () => {
                 className="rounded-full"
               />
             </div>
-          </li>
+          </Link>
         </ul>
       </div>
     </div>

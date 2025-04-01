@@ -39,21 +39,36 @@ const Page = () => {
   }, [userParam]);
 
   return (
-    <div className="w-full h-full flex flex-col items-start justify-start py-3 px-2 gap-2 overflow-y-scroll">
-      <div className="h-[max-content] w-[max-content] flex flex-col items-center justify-center p-1 border-[3px] border-blue-900 rounded-full">
-        <Image
-          src={data?.picture || "/assets/pic1.jpg"}
-          alt="Profile Picture"
-          height={140}
-          width={140}
-          className="rounded-full"
+    <div className="w-full h-full flex flex-col items-start justify-start py-6 px-16 gap-2 overflow-y-scroll ">
+      <div className=" w-[max-content] h-[max-content] flex flex-col items-center justify-start gap-6 ">
+        <div className=" w-[max-content] h-[max-content] flex items-center justify-start gap-6 ">
+          <div
+            className="h-[max-content] w-[max-content] flex flex-col items-center justify-center p-[2px] bg-gradient-to-r from-blue-900 via-blue-600 to-white 
+             bg-[length:200%_100%] 
+             animate-gradient-shadow rounded-full"
+          >
+            <Image
+              src={data?.picture || "/assets/pic1.jpg"}
+              alt="Profile Picture"
+              height={140}
+              width={140}
+              className="rounded-full object-contain "
+            />
+          </div>
+          <div className="h-[max-content] w-[max-content] flex flex-col items-start justify-start p-2 ">
+            <h1 className=" text-zinc-400  text-[.9rem]">{data?.userName}</h1>
+            <h3 className=" text-zinc-200  text-[2rem]">
+              {data?.firstName + " " + data?.lastName}
+            </h3>
+            <h4 className=" text-zinc-300  text-[1.1rem]">{data?.headLine}</h4>
+            <p className=" text-zinc-400  text-[.8rem]">{data?.about}</p>
+          </div>
+        </div>
+
+        <div
+          className="w-full h-[1px] 
+             bg-zinc-700"
         />
-      </div>
-      <div className="h-[max-content] w-[400px] flex flex-col items-start justify-start p-2 gap-2">
-        <h1>{data?.userName}</h1>
-        <h3>{data?.firstName + " " + data?.lastName}</h3>
-        <h4>{data?.headLine}</h4>
-        <p>{data?.about}</p>
       </div>
       <div className="w-full h-[max-content] flex items-start justify-start flex-wrap gap-4">
         {data?.badges?.map((v) => (

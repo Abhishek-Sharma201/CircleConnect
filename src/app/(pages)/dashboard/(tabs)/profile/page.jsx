@@ -139,7 +139,9 @@ const Page = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-600 text-white text-[.8rem] rounded-md px-4 py-1"
+          className="rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
+             bg-[length:200%_100%] 
+             animate-gradient-shadow text-[.9rem] py-[7px] px-3 outline-none h-[max-content]"
         >
           Save
         </button>
@@ -152,6 +154,14 @@ const Page = () => {
             {DummyBadges.map((v) => (
               <Badge key={v._id} {...v} />
             ))}
+            <button
+              type="button"
+              className=" rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
+             bg-[length:200%_100%] 
+             animate-gradient-shadow text-[.9rem] py-[7px] px-3 outline-none h-[max-content] "
+            >
+              + Add more
+            </button>
           </div>
         </div>
         <hr className="w-full h-[1px] bg-zinc-800 border-none dark:bg-zinc-700" />
