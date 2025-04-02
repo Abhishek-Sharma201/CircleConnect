@@ -1,6 +1,26 @@
 import Image from "next/image";
 import React from "react";
 
+const getTimeDifference = (createdAt) => {
+  const now = new Date();
+  const postDate = new Date(createdAt);
+  const diffInSeconds = Math.floor((now - postDate) / 1000);
+
+  if (diffInSeconds < 60) return "Just now";
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  if (diffInMinutes < 60) return `${diffInMinutes} min ago`;
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  if (diffInHours < 24) return `${diffInHours} hours ago`;
+  const diffInDays = Math.floor(diffInHours / 24);
+  if (diffInDays < 7) return `${diffInDays} days ago`;
+  const diffInWeeks = Math.floor(diffInDays / 7);
+  if (diffInWeeks < 4) return `${diffInWeeks} weeks ago`;
+  const diffInMonths = Math.floor(diffInDays / 30);
+  if (diffInMonths < 12) return `${diffInMonths} months ago`;
+  const diffInYears = Math.floor(diffInDays / 365);
+  return `${diffInYears} years ago`;
+};
+
 const PostCard = ({
   postedBy,
   createdAt,
@@ -9,13 +29,14 @@ const PostCard = ({
   image,
   postedByPic,
 }) => {
-  const postTime = new Date(createdAt).toLocaleString();
+  const postTime = getTimeDifference(createdAt);
+
   return (
-    <div className="h-[max-content] w-[max-content] p-2 rounded-md flex flex-col items-start justify-between gap-2 border border-zinc-800">
+    <div className="h-[max-content] w-[370px] p-2 rounded-md flex flex-col items-start justify-between gap-2 border border-zinc-800">
       <div className="h-[max-content] w-full rounded-md overflow-hidden relative">
         <Image
           className="w-full object-contain rounded-md"
-          src={image?.secure_url || "/assets/pic1.jpg"}
+          src={image || "/assets/pic1.jpg"}
           alt="postImg"
           width={400}
           height={300}

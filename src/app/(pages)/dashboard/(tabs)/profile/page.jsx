@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Badge from "@/src/components/dashboard/Badge";
 import PostCard from "@/src/components/dashboard/PostCard";
 import { useAuth } from "@/src/hooks/useAuth";
@@ -23,6 +23,8 @@ const Page = () => {
   const [openInp, setOpenInp] = useState(false);
   const [newBadge, setNewBadge] = useState("");
   const [badges, setBadges] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const errorToastShown = useRef(false);
 
   useEffect(() => {
     if (user) {
@@ -34,6 +36,32 @@ const Page = () => {
         headLine: user.headLine || "",
         about: user.about || "",
       });
+    }
+  }, [user]);
+
+  const fetchUserPosts = async () => {
+    if (!user?._id) return;
+    try {
+      const res = await fetch(`${apiURL}/api/posts/get/${user._id}`);
+      const data = await res.json();
+
+      console.log("API Response:", data); // Debugging line
+
+      if (!res.ok || !data.posts || !Array.isArray(data.posts)) {
+        throw new Error(data.message || "Invalid response structure");
+      }
+
+      setPosts(data.posts);
+    } catch (error) {
+      console.error("Fetch error:", error);
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      errorToastShown.current = false;
+      fetchUserPosts();
     }
   }, [user]);
 
@@ -258,10 +286,22 @@ const Page = () => {
         <hr className="w-full h-[1px] bg-zinc-800 border-none dark:bg-zinc-700" />
         <div className="w-full flex flex-col items-start gap-6 px-3 overflow-y-scroll">
           <h1>Posts</h1>
-          <div className="grid grid-cols-2 gap-8">
-            {DummyPosts.map((v, i) => (
-              <PostCard key={v._id || i} {...v} />
-            ))}
+          <div className="grid grid-cols-2 gap-4">
+            {posts?.length > 0 ? (
+              posts.map((v) => (
+                <PostCard
+                  key={v?._id}
+                  postedBy={v?.postedBy?.userName}
+                  createdAt={v?.createdAt}
+                  head={v?.head}
+                  description={v?.description}
+                  image={v?.image?.secure_url}
+                  postedByPic={v?.postedBy?.picture}
+                />
+              ))
+            ) : (
+              <p className="text-gray-400">No posts found.</p>
+            )}
           </div>
         </div>
       </div>

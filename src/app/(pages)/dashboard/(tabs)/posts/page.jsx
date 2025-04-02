@@ -23,26 +23,19 @@ const Page = () => {
   const fetchUserPosts = async () => {
     if (!user?._id) return;
     try {
-      const res = await fetch(`${apiURL}/api/posts/get/${user._id}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      const res = await fetch(`${apiURL}/api/posts/get/${user._id}`);
       const data = await res.json();
-      if (!res.ok) {
-        if (!errorToastShown.current) {
-          toast.error(data.message || "Error fetching posts");
-          errorToastShown.current = true;
-        }
-        setPosts([]);
-        return;
+
+      console.log("API Response:", data); // Debugging line
+
+      if (!res.ok || !data.posts || !Array.isArray(data.posts)) {
+        throw new Error(data.message || "Invalid response structure");
       }
+
       setPosts(data.posts);
-      console.log(data.posts);
     } catch (error) {
-      if (!errorToastShown.current) {
-        toast.error(error.message);
-        errorToastShown.current = true;
-      }
+      console.error("Fetch error:", error);
+      toast.error(error.message);
     }
   };
 
@@ -205,9 +198,19 @@ const Page = () => {
           </form>
         </div>
       )}
-      <div className="mt-6 grid grid-cols-1 gap-4 w-full">
+      <div className="mt-6 grid grid-cols-3 w-full">
         {posts?.length > 0 ? (
-          posts.map((v) => <PostCard key={v?._id} {...v} />)
+          posts.map((v) => (
+            <PostCard
+              key={v?._id}
+              postedBy={v?.postedBy?.userName}
+              createdAt={v?.createdAt}
+              head={v?.head}
+              description={v?.description}
+              image={v?.image?.secure_url}
+              postedByPic={v?.postedBy?.picture}
+            />
+          ))
         ) : (
           <p className="text-gray-400">No posts found.</p>
         )}
