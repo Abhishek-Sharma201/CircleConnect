@@ -8,6 +8,7 @@ import { DummyBadges, DummyPosts } from "@/src/utils/dummyData";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { apiURL } from "@/src/constants";
+import Loader from "@/src/components/dashboard/Loader";
 
 const Page = () => {
   const { user, loading } = useAuth();
@@ -84,26 +85,27 @@ const Page = () => {
 
   const fetchBadges = async () => {
     try {
-      const f = await fetch(`${apiURL}/api/badge/get/${user?.id}`);
+      const f = await fetch(`${apiURL}/api/badge/get/${user?._id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
       const j = await f.json();
       if (!f.ok) toast.error(j.message);
       setBadges(j.badges);
+      console.log(badges);
     } catch (error) {
       toast.error(error.message);
     }
   };
 
   useEffect(() => {
-    fetchBadges();
+    if (user) {
+      fetchBadges();
+    }
   }, [user]);
 
   if (loading) {
-    return (
-      <div className=" h-full w-full flex items-center justify-center gap-4 ">
-        <div className=" h-[20px] w-[20px] border-[3px] border-zinc-800 border-t-blue-500 rounded-full animate-spin "></div>
-        Loading...
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
@@ -209,8 +211,8 @@ const Page = () => {
         <div className="w-full flex flex-col items-start gap-3 px-4">
           <h1>Your Badges</h1>
           <div className="flex flex-wrap gap-4">
-            {badges.map((v) => (
-              <Badge key={v._id} {...v} />
+            {badges?.map((v, i) => (
+              <Badge key={v._id || i} {...v} />
             ))}
             {openInp && (
               <div className="flex gap-2 items-center">
@@ -257,8 +259,8 @@ const Page = () => {
         <div className="w-full flex flex-col items-start gap-6 px-3 overflow-y-scroll">
           <h1>Posts</h1>
           <div className="grid grid-cols-2 gap-8">
-            {DummyPosts.map((v) => (
-              <PostCard key={v._id} {...v} />
+            {DummyPosts.map((v, i) => (
+              <PostCard key={v._id || i} {...v} />
             ))}
           </div>
         </div>

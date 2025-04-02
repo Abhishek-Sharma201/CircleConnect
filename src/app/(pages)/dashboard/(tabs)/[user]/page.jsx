@@ -7,14 +7,17 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import PostCard from "@/src/components/dashboard/PostCard";
 import Badge from "@/src/components/dashboard/Badge";
+import Loader from "@/src/components/dashboard/Loader";
 
 const Page = () => {
   const params = useParams();
   const userParam = params?.user;
+  const [loading, setLoading] = useState(false);
 
   const [data, setData] = useState(null);
 
   const fetchUser = async () => {
+    setLoading(true);
     try {
       const res = await fetch(`${apiURL}/api/search/${userParam}`);
       const json = await res.json();
@@ -24,9 +27,13 @@ const Page = () => {
       const userData = Array.isArray(json.user) ? json.user[0] : json.user;
       setData(userData);
       console.log(userData);
+      setLoading(false);
       toast.success(json.message);
     } catch (error) {
       toast.error(error.message);
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,6 +44,10 @@ const Page = () => {
       })();
     }
   }, [userParam]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full h-full flex flex-col items-start justify-start py-6 px-16 gap-2 overflow-y-scroll ">
@@ -71,9 +82,15 @@ const Page = () => {
         />
       </div>
       <div className="w-full h-[max-content] flex items-start justify-start flex-wrap gap-4">
-        {data?.badges?.map((v) => (
-          <Badge key={v._id} {...v} />
-        ))}
+        {data?.badges?.length === 0 ? (
+          <h3 className=" text-zinc-300 text-[.9rem] ">No badges Available.</h3>
+        ) : (
+          <>
+            {data?.badges?.map((v) => (
+              <Badge key={v._id} {...v} />
+            ))}
+          </>
+        )}
       </div>
       <div className="w-full h-[max-content] flex items-start justify-start flex-wrap gap-4">
         {data?.posts?.map((v) => (

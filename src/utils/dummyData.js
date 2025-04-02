@@ -1,4 +1,5 @@
 import { GOKU, OGGY, WINDOWS } from "./imports";
+import { Badge, Notifications, Shield, Text } from "./SVG";
 
 export const DummyBadges = [
   {
@@ -370,3 +371,26 @@ export const MainUser = {
     },
   ],
 };
+
+export const FCardData = [
+  {
+    svg: <Shield />,
+    head: "Authentication",
+    description: "uses a google secured auth for fast login to users account.",
+  },
+  {
+    svg: <Text />,
+    head: "Blog post",
+    description: "users can post there daily activity as blogs.",
+  },
+  {
+    svg: <Badge />,
+    head: "Create badges",
+    description: "users can create badges according to there lifestyles.",
+  },
+  {
+    svg: <Notifications />,
+    head: "Daily notifications",
+    description: "users can recieve notification from others.",
+  },
+];

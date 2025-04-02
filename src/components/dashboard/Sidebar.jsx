@@ -49,35 +49,21 @@ const Sidebar = () => {
 
       <ul className=" w-full h-[max-content] p-2 flex flex-col items-center justify-center gap-3 text-[.95rem] ">
         <Link
-          href={"/dashboard/badges"}
+          href={"/dashboard"}
           className={`w-full ${
             isOpen ? "px-4" : "px-2"
           } py-2 flex items-center justify-between rounded-md border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 hover:border-zinc-700`}
         >
           {isOpen ? (
             <>
-              Badges
+              Board
               <Moon />
             </>
           ) : (
             <Moon />
           )}
         </Link>
-        <Link
-          href={"/dashboard/applied"}
-          className={`w-full ${
-            isOpen ? "px-4" : "px-2"
-          } py-2 flex items-center justify-between rounded-md border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 hover:border-zinc-700`}
-        >
-          {isOpen ? (
-            <>
-              Applied
-              <Moon />
-            </>
-          ) : (
-            <Moon />
-          )}
-        </Link>
+
         <Link
           href={"/dashboard/posts"}
           className={`w-full ${
@@ -87,21 +73,6 @@ const Sidebar = () => {
           {isOpen ? (
             <>
               Posts
-              <Moon />
-            </>
-          ) : (
-            <Moon />
-          )}
-        </Link>
-        <Link
-          href={"/dashboard/applicants"}
-          className={`w-full ${
-            isOpen ? "px-4" : "px-2"
-          } py-2 flex items-center justify-between rounded-md border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 hover:border-zinc-700`}
-        >
-          {isOpen ? (
-            <>
-              Applicants
               <Moon />
             </>
           ) : (
