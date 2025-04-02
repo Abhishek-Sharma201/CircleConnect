@@ -2,7 +2,14 @@
 
 import React, { useState } from "react";
 import Name from "./Name";
-import { Logout, Moon, ToggleIcon } from "@/src/utils/SVG";
+import {
+  Dashboard,
+  Logout,
+  Moon,
+  Notifications,
+  Text,
+  ToggleIcon,
+} from "@/src/utils/SVG";
 import Link from "next/link";
 import { useAuth } from "@/src/hooks/useAuth";
 import { toast } from "react-toastify";
@@ -57,10 +64,10 @@ const Sidebar = () => {
           {isOpen ? (
             <>
               Board
-              <Moon />
+              <Dashboard />
             </>
           ) : (
-            <Moon />
+            <Dashboard />
           )}
         </Link>
 
@@ -73,10 +80,26 @@ const Sidebar = () => {
           {isOpen ? (
             <>
               Posts
-              <Moon />
+              <Text h={"16px"} w={"16px"} />
             </>
           ) : (
-            <Moon />
+            <Text h={"16px"} w={"16px"} />
+          )}
+        </Link>
+
+        <Link
+          href={"/dashboard/notifications"}
+          className={`w-full ${
+            isOpen ? "px-4" : "px-2"
+          } py-2 flex items-center justify-between rounded-md border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 hover:border-zinc-700`}
+        >
+          {isOpen ? (
+            <>
+              Notifications
+              <Notifications h={"16px"} w={"16px"} />
+            </>
+          ) : (
+            <Notifications h={"16px"} w={"16px"} />
           )}
         </Link>
       </ul>
