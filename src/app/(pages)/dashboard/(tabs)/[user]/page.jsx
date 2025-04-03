@@ -94,7 +94,15 @@ const Page = () => {
       </div>
       <div className="w-full h-[max-content] flex items-start justify-start flex-wrap gap-4">
         {data?.posts?.map((v) => (
-          <PostCard key={v._id} {...v} />
+          <PostCard
+            key={v?._id}
+            postedBy={v?.postedBy?.userName}
+            createdAt={v?.createdAt}
+            head={v?.head}
+            description={v?.description}
+            image={v?.image?.secure_url}
+            postedByPic={v?.postedBy?.picture}
+          />
         ))}
       </div>
     </div>
