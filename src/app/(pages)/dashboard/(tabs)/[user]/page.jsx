@@ -101,7 +101,7 @@ const Page = () => {
             head={v?.head}
             description={v?.description}
             image={v?.image?.secure_url}
-            postedByPic={v?.postedBy?.picture}
+            postedByPic={v?.picture}
           />
         ))}
       </div>
