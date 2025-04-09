@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Badge from "@/src/components/dashboard/Badge";
 import PostCard from "@/src/components/dashboard/PostCard";
 import { useAuth } from "@/src/hooks/useAuth";
-import { DummyBadges, DummyPosts } from "@/src/utils/dummyData";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { apiURL } from "@/src/constants";
@@ -27,6 +26,7 @@ const Page = () => {
   const errorToastShown = useRef(false);
 
   useEffect(() => {
+    console.log(`user: ${user}`);
     if (user) {
       setForm({
         userName: user.userName || "",
@@ -45,7 +45,7 @@ const Page = () => {
       const res = await fetch(`${apiURL}/api/posts/get/${user._id}`);
       const data = await res.json();
 
-      console.log("API Response:", data); // Debugging line
+      console.log("API Response:", data);
 
       if (!res.ok || !data.posts || !Array.isArray(data.posts)) {
         throw new Error(data.message || "Invalid response structure");
@@ -137,7 +137,7 @@ const Page = () => {
   }
 
   return (
-    <div className="w-full h-full flex items-start justify-start py-3 px-2 gap-2 overflow-y-scroll">
+    <div className="w-full h-full flex items-start justify-start py-3 px-2 gap-2 overflow-x-hidden overflow-y-scroll">
       <form
         onSubmit={submit}
         className="w-[680px] h-full flex flex-col items-center justify-start px-3 gap-8"
@@ -291,6 +291,7 @@ const Page = () => {
               posts.map((v) => (
                 <PostCard
                   key={v?._id}
+                  id={v?._id}
                   postedBy={v?.postedBy?.userName}
                   createdAt={v?.createdAt}
                   head={v?.head}
@@ -309,4 +310,6 @@ const Page = () => {
   );
 };
 
-export default Page;
+const page = React.memo(Page);
+
+export default page;

@@ -9,8 +9,8 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "res.cloudinary.com", // Cloudinary domain
-        pathname: "/**", // Allow all paths under Cloudinary
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
       },
     ],
   },

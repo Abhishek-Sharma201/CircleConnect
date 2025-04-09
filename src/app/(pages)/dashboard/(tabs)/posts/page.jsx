@@ -111,7 +111,7 @@ const Page = () => {
   }
 
   return (
-    <div className="h-full w-full flex flex-col items-start justify-start p-6">
+    <div className="h-full w-full flex flex-col items-start justify-start p-6 overflow-x-hidden overflow-y-scroll">
       <div className="flex items-center justify-between w-full">
         <h1 className="text-xl font-bold">Your Posts</h1>
         <button
@@ -198,11 +198,12 @@ const Page = () => {
           </form>
         </div>
       )}
-      <div className="mt-6 grid grid-cols-3 w-full">
+      <div className="mt-6 grid grid-cols-3 w-full gap-4">
         {posts?.length > 0 ? (
           posts.map((v) => (
             <PostCard
               key={v?._id}
+              id={v._id}
               postedBy={v?.postedBy?.userName}
               createdAt={v?.createdAt}
               head={v?.head}

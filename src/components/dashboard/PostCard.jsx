@@ -1,11 +1,11 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const getTimeDifference = (createdAt) => {
   const now = new Date();
   const postDate = new Date(createdAt);
   const diffInSeconds = Math.floor((now - postDate) / 1000);
-
   if (diffInSeconds < 60) return "Just now";
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   if (diffInMinutes < 60) return `${diffInMinutes} min ago`;
@@ -21,7 +21,8 @@ const getTimeDifference = (createdAt) => {
   return `${diffInYears} years ago`;
 };
 
-const PostCard = ({
+const Card = ({
+  id,
   postedBy,
   createdAt,
   head,
@@ -29,10 +30,14 @@ const PostCard = ({
   image,
   postedByPic,
 }) => {
+  const router = useRouter();
   const postTime = getTimeDifference(createdAt);
 
   return (
-    <div className="h-[max-content] w-[370px] p-2 rounded-md flex flex-col items-start justify-between gap-2 border border-zinc-800">
+    <div
+      className="h-[max-content] w-full p-2 rounded-md flex flex-col items-start justify-between gap-2 border border-zinc-800"
+      onClick={() => router.push(`/dashboard/posts/${id}`)}
+    >
       <div className="h-[max-content] w-full rounded-md overflow-hidden relative">
         <Image
           className="w-full object-contain rounded-md"
@@ -57,12 +62,14 @@ const PostCard = ({
           width={30}
           height={30}
         />
-        <h6 className="text-[.7rem] text-zinc-500">{postedBy}</h6>
+        <h6 className="text-[.7rem] text-zinc-500">{postedBy || "Unknown"}</h6>
         <div className="flex-grow"></div>
         <h6 className="text-[.7rem] text-zinc-500">{postTime}</h6>
       </div>
     </div>
   );
 };
+
+const PostCard = React.memo(Card);
 
 export default PostCard;

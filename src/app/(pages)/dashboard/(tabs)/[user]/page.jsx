@@ -50,7 +50,7 @@ const Page = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col items-start justify-start py-6 px-16 gap-2 overflow-y-scroll ">
+    <div className="w-full h-full flex flex-col items-start justify-start py-6 px-16 gap-2 overflow-x-hidden overflow-y-scroll ">
       <div className=" w-[max-content] h-[max-content] flex flex-col items-center justify-start gap-6 ">
         <div className=" w-[max-content] h-[max-content] flex items-center justify-start gap-6 ">
           <div
@@ -92,16 +92,17 @@ const Page = () => {
           </>
         )}
       </div>
-      <div className="w-full h-[max-content] flex items-start justify-start flex-wrap gap-4">
+      <div className="mt-6 grid grid-cols-3 w-full gap-4">
         {data?.posts?.map((v) => (
           <PostCard
             key={v?._id}
-            postedBy={v?.postedBy?.userName}
+            id={v?._id}
+            postedBy={data?.userName}
             createdAt={v?.createdAt}
             head={v?.head}
             description={v?.description}
             image={v?.image?.secure_url}
-            postedByPic={v?.picture}
+            postedByPic={data?.picture || "/assets/pic1.jpg"}
           />
         ))}
       </div>

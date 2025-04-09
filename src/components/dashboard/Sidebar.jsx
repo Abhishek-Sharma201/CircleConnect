@@ -102,6 +102,22 @@ const Sidebar = () => {
             <Notifications h={"16px"} w={"16px"} />
           )}
         </Link>
+
+        <Link
+          href={"/dashboard/connections"}
+          className={`w-full ${
+            isOpen ? "px-4" : "px-2"
+          } py-2 flex items-center justify-between rounded-md border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 hover:border-zinc-700`}
+        >
+          {isOpen ? (
+            <>
+              Connections
+              <Notifications h={"16px"} w={"16px"} />
+            </>
+          ) : (
+            <Notifications h={"16px"} w={"16px"} />
+          )}
+        </Link>
       </ul>
 
       <div className="flex-grow"></div>

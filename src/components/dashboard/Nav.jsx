@@ -40,17 +40,18 @@ const Nav = () => {
   };
 
   return (
-    <div className="w-full h-[10dvh] flex items-center justify-between p-4 border-b border-b-zinc-700 relative">
-      <div className="w-[max-content] h-full flex items-center justify-center gap-6">
-        <h1 className="text-[.95rem] text-zinc-400 text-center">
+    <div className="w-full h-[10dvh] flex items-center justify-between p-4 border-b border-b-zinc-700 relative bg-transparent backdrop-blur-md">
+      <div className="w-[450px] h-full flex items-center justify-start gap-6">
+        <h1 className="text-[.95rem] text-zinc-400 text-center min-w-[60px] max-w-[200px] truncate">
           {path ? path : "/"}
         </h1>
         <span className="h-full w-[1px] bg-zinc-700" />
         <h1>
-          <span className=" text-[.9rem] text-zinc-300 "> Welcome, </span>
+          <span className="text-[.9rem] text-zinc-300"> Welcome, </span>
           {user?.firstName + " " + user?.lastName}
         </h1>
       </div>
+
       <div className="w-[max-content] h-full flex items-center justify-center gap-6 relative">
         <div className="w-[max-content] h-full flex flex-col items-center justify-center">
           <div className="w-[max-content] h-full flex items-center justify-center rounded-md border gap-2 p-1 border-zinc-800">
@@ -70,6 +71,7 @@ const Nav = () => {
               className="h-full w-[300px] px-1 bg-transparent border-none outline-none placeholder:text-zinc-300 placeholder:text-[.9rem] text-zinc-300 text-[.8rem]"
               onChange={handleChange}
               value={value}
+              autoComplete="false"
             />
           </div>
           {value && matchedUsers.length > 0 && (
