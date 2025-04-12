@@ -67,7 +67,7 @@ const Nav = () => {
               type="search"
               name="search"
               id="search"
-              placeholder="Search here..."
+              placeholder="Search peoples..."
               className="h-full w-[300px] px-1 bg-transparent border-none outline-none placeholder:text-zinc-300 placeholder:text-[.9rem] text-zinc-300 text-[.8rem]"
               onChange={handleChange}
               value={value}

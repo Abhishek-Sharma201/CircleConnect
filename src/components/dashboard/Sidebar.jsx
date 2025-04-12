@@ -6,6 +6,7 @@ import {
   Dashboard,
   Logout,
   Moon,
+  Node,
   Notifications,
   Text,
   ToggleIcon,
@@ -112,10 +113,10 @@ const Sidebar = () => {
           {isOpen ? (
             <>
               Connections
-              <Notifications h={"16px"} w={"16px"} />
+              <Node h={"16px"} w={"16px"} />
             </>
           ) : (
-            <Notifications h={"16px"} w={"16px"} />
+            <Node h={"16px"} w={"16px"} />
           )}
         </Link>
       </ul>

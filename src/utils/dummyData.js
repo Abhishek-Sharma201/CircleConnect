@@ -394,3 +394,108 @@ export const FCardData = [
     description: "users can recieve notification from others.",
   },
 ];
+
+export const ConnectionData = [
+  {
+    _id: "k2g4HGF873IY",
+    name: "Test",
+    image: GOKU,
+    connections: [
+      {
+        name: "c1",
+      },
+      {
+        name: "c2",
+      },
+      {
+        name: "c3",
+      },
+      {
+        name: "c4",
+      },
+    ],
+    badges: [
+      {
+        name: "React",
+      },
+      {
+        name: "Test",
+      },
+      {
+        name: "Animator",
+      },
+      {
+        name: "Dev",
+      },
+    ],
+    headLine: "It is a hardcoded data created for testing",
+  },
+  {
+    _id: "k2gHGF83IY",
+    name: "Test",
+    image: GOKU,
+    connections: [
+      {
+        name: "c1",
+      },
+      {
+        name: "c2",
+      },
+      {
+        name: "c3",
+      },
+      {
+        name: "c4",
+      },
+    ],
+    badges: [
+      {
+        name: "React",
+      },
+      {
+        name: "Test",
+      },
+      {
+        name: "Animator",
+      },
+      {
+        name: "Dev",
+      },
+    ],
+    headLine: "It is a hardcoded data created for testing",
+  },
+  {
+    _id: "k2g4F873IY",
+    name: "Test",
+    image: GOKU,
+    connections: [
+      {
+        name: "c1",
+      },
+      {
+        name: "c2",
+      },
+      {
+        name: "c3",
+      },
+      {
+        name: "c4",
+      },
+    ],
+    badges: [
+      {
+        name: "React",
+      },
+      {
+        name: "Test",
+      },
+      {
+        name: "Animator",
+      },
+      {
+        name: "Dev",
+      },
+    ],
+    headLine: "It is a hardcoded data created for testing",
+  },
+];

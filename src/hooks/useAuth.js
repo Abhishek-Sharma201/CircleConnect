@@ -1,13 +1,8 @@
-// useAuth hook
-
 "use client";
 
 import { useEffect, useState } from "react";
 import { apiURL } from "../constants";
-import dotenv from "dotenv";
 import { useUser } from "../context/userContex";
-
-dotenv.config();
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,14 +13,17 @@ export const useAuth = () => {
     const checkAuth = async () => {
       try {
         const token = localStorage.getItem("token");
+        if (!token) {
+          setLoading(false);
+          return;
+        }
         const response = await fetch(`${apiURL}/api/auth/me`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
+            Authorization: `Bearer ${token}`,
           },
         });
-
         if (response.ok) {
           const data = await response.json();
           setIsAuthenticated(true);
@@ -39,23 +37,22 @@ export const useAuth = () => {
     };
 
     checkAuth();
-  }, []);
+  }, [setUser]);
 
   const signup = async (form) => {
     try {
       const response = await fetch(`${apiURL}/api/auth/signup`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...form }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       });
 
-      if (response.status === 409)
-        return { success: response.success, message: response.message };
+      // If user already exists (HTTP 409), handle accordingly.
+      if (response.status === 409) {
+        return { success: false, message: "User already exists" };
+      }
 
       const data = await response.json();
-
       return data;
     } catch (error) {
       return { success: false, message: "Signup failed." };
@@ -66,9 +63,7 @@ export const useAuth = () => {
     try {
       const response = await fetch(`${apiURL}/api/auth/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
@@ -86,37 +81,11 @@ export const useAuth = () => {
     }
   };
 
-  // const googleLogin = async (token) => {
-  //   try {
-  //     const response = await fetch(`${apiURL}/api/auth/google`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ token }),
-  //     });
-
-  //     const data = await response.json();
-
-  //     if (data.success) {
-  //       setIsAuthenticated(true);
-  //       setUser(data.user);
-  //       localStorage.setItem("token", data.token);
-  //     }
-
-  //     return data;
-  //   } catch (error) {
-  //     return { success: false, message: "Google Login failed" };
-  //   }
-  // };
-
   const googleLogin = async (token) => {
     try {
       const response = await fetch(`${apiURL}/api/auth/google`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
       });
 
@@ -136,7 +105,6 @@ export const useAuth = () => {
   const logout = async () => {
     try {
       const token = localStorage.getItem("token");
-
       const response = await fetch(`${apiURL}/api/auth/logout`, {
         method: "POST",
         headers: {
