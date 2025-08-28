@@ -3,7 +3,7 @@ import { Badge, Notifications, Shield, Text } from "./SVG";
 
 export const DummyBadges = [
   {
-    _id: "834tuyg84",
+    _id: "834tuyfg84",
     skill: "Reactjs",
   },
   {
