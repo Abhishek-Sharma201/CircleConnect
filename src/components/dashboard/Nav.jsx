@@ -19,7 +19,6 @@ const Nav = () => {
   const handleChange = async (e) => {
     const newValue = e.target.value;
     setValue(newValue);
-
     if (newValue.trim().length > 0) {
       try {
         const response = await fetch(`${apiURL}/api/search/get/${newValue}`);

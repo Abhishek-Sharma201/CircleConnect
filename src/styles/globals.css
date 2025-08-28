@@ -72,3 +72,15 @@ body {
     rgb(0, 0, 0) 100%
   );
 }
+
+.createPostForm {
+  background: linear-gradient(
+    to bottom,
+    rgb(32, 32, 32),
+    rgb(17, 17, 17),
+    rgb(0, 0, 0)
+  );
+  box-shadow: 1px 1px 50px rgb(39, 39, 39);
+  border-left: 1px solid rgb(0, 81, 255);
+  border-top: 1px solid rgb(0, 81, 255);
+}

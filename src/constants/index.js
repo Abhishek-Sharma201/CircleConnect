@@ -1,4 +1,4 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-export const apiURL = "https://circle-connect-backend.onrender.com";
+export const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
