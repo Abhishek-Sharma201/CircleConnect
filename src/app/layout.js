@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Circle connect",
+  title: "PostGrid",
   description: "Platform for bloggers",
 };
 

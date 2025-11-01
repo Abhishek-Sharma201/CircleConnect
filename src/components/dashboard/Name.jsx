@@ -9,7 +9,7 @@ const Name = ({ className }) => {
       className={` whitespace-nowrap cursor-pointer ${className} `}
       onClick={() => router.push("/")}
     >
-      Circle Connect
+      PostGrid
     </h1>
   );
 };

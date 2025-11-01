@@ -7,16 +7,17 @@ import { apiURL } from "@/src/constants";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Loader from "@/src/components/dashboard/Loader";
+import Link from "next/link";
 
 const Page = () => {
   const { user, loading } = useAuth();
   const [posts, setPosts] = useState([]);
-  const [openForm, setOpenForm] = useState(false);
-  const [postForm, setPostForm] = useState({
-    head: "",
-    description: "",
-  });
-  const [imageFile, setImageFile] = useState(null);
+  // const [openForm, setOpenForm] = useState(false);
+  // const [postForm, setPostForm] = useState({
+  //   head: "",
+  //   description: "",
+  // });
+  // const [imageFile, setImageFile] = useState(null);
   const router = useRouter();
   const errorToastShown = useRef(false);
 
@@ -54,57 +55,57 @@ const Page = () => {
     }));
   };
 
-  const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setImageFile(e.target.files[0]);
-    }
-  };
+  // const handleFileChange = (e) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     setImageFile(e.target.files[0]);
+  //   }
+  // };
 
-  const submitPost = async (e) => {
-    e.preventDefault();
-    if (!postForm.head.trim() || !postForm.description.trim()) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-    let imageData = "";
-    if (imageFile) {
-      const reader = new FileReader();
-      reader.readAsDataURL(imageFile);
-      imageData = await new Promise((resolve, reject) => {
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
-    } else {
-      imageData = "https://via.placeholder.com/150";
-    }
-    try {
-      const postData = {
-        postedBy: user._id,
-        head: postForm.head,
-        description: postForm.description,
-        image: imageData,
-      };
-      const res = await fetch(`${apiURL}/api/posts/post`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message);
-      }
-      toast.success(data.message);
-      console.log(data.post);
-      setPosts((prev) => [data.post, ...prev]);
-      setPostForm({ head: "", description: "" });
-      setImageFile(null);
-      setOpenForm(false);
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+  // const submitPost = async (e) => {
+  //   e.preventDefault();
+  //   if (!postForm.head.trim() || !postForm.description.trim()) {
+  //     toast.error("Please fill in all required fields");
+  //     return;
+  //   }
+  //   let imageData = "";
+  //   if (imageFile) {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(imageFile);
+  //     imageData = await new Promise((resolve, reject) => {
+  //       reader.onload = () => resolve(reader.result);
+  //       reader.onerror = (error) => reject(error);
+  //     });
+  //   } else {
+  //     imageData = "https://via.placeholder.com/150";
+  //   }
+  //   try {
+  //     const postData = {
+  //       postedBy: user._id,
+  //       head: postForm.head,
+  //       description: postForm.description,
+  //       image: imageData,
+  //     };
+  //     const res = await fetch(`${apiURL}/api/posts/post`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(postData),
+  //     });
+  //     const data = await res.json();
+  //     if (!res.ok) {
+  //       throw new Error(data.message);
+  //     }
+  //     toast.success(data.message);
+  //     console.log(data.post);
+  //     setPosts((prev) => [data.post, ...prev]);
+  //     setPostForm({ head: "", description: "" });
+  //     setImageFile(null);
+  //     setOpenForm(false);
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
 
   if (loading) {
     return <Loader />;
@@ -114,14 +115,14 @@ const Page = () => {
     <div className="h-full w-full flex flex-col items-start justify-start p-6 overflow-x-hidden overflow-y-scroll">
       <div className="flex items-center justify-between w-full">
         <h1 className="text-xl font-bold">Your Posts</h1>
-        <button
+        <Link
+          href={"/create"}
           className="rounded-md bg-blue-600 text-white px-4 py-2"
-          onClick={() => setOpenForm(true)}
         >
           Create
-        </button>
+        </Link>
       </div>
-      {openForm && (
+      {/* {openForm && (
         <div className="w-full h-[100dvh] fixed top-0 left-0 z-10 bg-black bg-opacity-70 flex flex-col items-center justify-center gap-4">
           <form
             onSubmit={submitPost}
@@ -197,7 +198,7 @@ const Page = () => {
             </div>
           </form>
         </div>
-      )}
+      )} */}
       <div className="mt-6 grid grid-cols-3 w-full gap-4">
         {posts?.length > 0 ? (
           posts.map((v) => (

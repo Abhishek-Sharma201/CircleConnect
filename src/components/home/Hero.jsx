@@ -28,14 +28,16 @@ const Hero = () => {
           rotationInterval={2000}
         />
         <p className=" text-zinc-400 text-[.8rem] ">
-          circle-connect is platform for bloggers who want's <br /> to share
-          there daily life activities.
+          PostGrid is platform for bloggers who want's <br /> to share there
+          daily life activities.
         </p>
       </div>
       <div className=" w-[max-content] h-full flex flex-col items-start justify-center gap-4 ">
         <h1 className=" text-[1.1rem] ">
-          New to Circle connect? <br />
-          <Link href={"/signup"} className=" text-blue-600 text-[.9rem] ">Signup now</Link>
+          New to PostGrid? <br />
+          <Link href={"/signup"} className=" text-blue-600 text-[.9rem] ">
+            Signup now
+          </Link>
         </h1>
       </div>
     </div>

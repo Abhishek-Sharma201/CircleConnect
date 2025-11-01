@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { Upload, Sparkles, Hash, ImageIcon, X } from "lucide-react";
+import Link from "next/link";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
@@ -177,10 +178,17 @@ export default function CreatePost() {
 
         {/* Footer */}
         <div className="flex justify-between border-t border-[#1a1a2e] p-5">
-          <button className="px-4 py-2 border border-[#1a1a2e] text-gray-300 rounded-md hover:bg-[#131320] hover:border-blue-500 transition-colors">
+          <Link
+            href={"/dashboard"}
+            className="px-4 py-2 border border-[#1a1a2e] text-gray-300 rounded-md bg-red-500  hover:bg-red-700 transition-colors "
+          >
             Cancel
-          </button>
-          <button className="px-4 py-2 rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 animate-gradient-shadow text-white hover:opacity-90 transition-opacity">
+          </Link>
+          <button
+            className="px-4 py-2 rounded-md hover:bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
+                   bg-[length:200%_100%] 
+                   animate-gradient-shadow text-white hover:opacity-90 transition-opacity"
+          >
             Publish Post
           </button>
         </div>
