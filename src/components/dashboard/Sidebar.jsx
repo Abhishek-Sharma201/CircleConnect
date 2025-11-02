@@ -89,7 +89,7 @@ const Sidebar = () => {
             isOpen ? "justify-between" : "justify-center"
           } rounded-md ${
             path == "posts"
-              ? "border-blue-800 bg-blue-950 hover:bg-blue-900 hover:border-blue-700"
+              ? "border-blue-800 bg-blue-600 hover:bg-blue-700 hover:border-blue-700"
               : "bg-zinc-950/30 hover:bg-zinc-900/30"
           }`}
         >
@@ -112,7 +112,7 @@ const Sidebar = () => {
             isOpen ? "justify-between" : "justify-center"
           } rounded-md  ${
             path == "notifications"
-              ? "border-blue-800 bg-blue-950 hover:bg-blue-900 hover:border-blue-700"
+              ? "border-blue-800 bg-blue-600 hover:bg-blue-700 hover:border-blue-700"
               : "bg-zinc-950/30 hover:bg-zinc-900/30"
           }`}
         >
@@ -135,7 +135,7 @@ const Sidebar = () => {
             isOpen ? "justify-between" : "justify-center"
           } rounded-md  ${
             path == "connections"
-              ? "border-blue-800 bg-blue-950 hover:bg-blue-900 hover:border-blue-700"
+              ? "border-blue-800 bg-blue-600 hover:bg-blue-700 hover:border-blue-700"
               : "bg-zinc-950/30 hover:bg-zinc-900/30"
           }`}
         >
@@ -154,7 +154,7 @@ const Sidebar = () => {
       {/* <hr className="w-full h-[1px] bg-zinc-800 border-none dark:bg-zinc-700 self-end" /> */}
 
       <button
-        className={`w-full ${isOpen ? "px-4" : "px-2"} py-2 flex items-center ${
+        className={`w-full ${isOpen ? "px-4" : "px-2"} py-2 flex items-center text-[.6rem] ${
           isOpen ? "justify-between" : "justify-center"
         } rounded-md bg-zinc-950/30 hover:bg-zinc-900/30`}
         onClick={handleLogout}
