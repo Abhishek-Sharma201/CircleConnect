@@ -80,7 +80,10 @@ const Nav = () => {
                   <SearchList
                     key={user._id}
                     {...user}
-                    onClick={() => router.push(`/dashboard/${user.userName}`)}
+                    onClick={() => {
+                      router.push(`/dashboard/${user.userName}`);
+                      setValue("");
+                    }}
                   />
                 ))}
               </ul>
