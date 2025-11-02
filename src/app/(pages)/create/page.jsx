@@ -1,16 +1,24 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Upload, Sparkles, Hash, ImageIcon, X } from "lucide-react";
 import Link from "next/link";
+import { apiURL } from "@/src/constants";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { useAuth } from "@/src/hooks/useAuth";
 
 export default function CreatePost() {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [hashtags, setHashtags] = useState([]);
   const [currentHashtag, setCurrentHashtag] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuth();
+  const [post, setPost] = useState({ head: "", description: "" });
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
@@ -29,14 +37,98 @@ export default function CreatePost() {
   const handleAddHashtag = (e) => {
     if (e.key === "Enter" && currentHashtag.trim()) {
       e.preventDefault();
-      if (!hashtags.includes(currentHashtag.trim())) {
-        setHashtags([...hashtags, currentHashtag.trim()]);
+      const tag = currentHashtag.trim();
+      if (!hashtags.includes(tag)) {
+        setHashtags((prev) => [...prev, tag]);
       }
       setCurrentHashtag("");
     }
   };
 
   const removeHashtag = (tag) => setHashtags(hashtags.filter((t) => t !== tag));
+
+  const genContext = async () => {
+    try {
+      setIsLoading(true);
+
+      const res = await fetch(`${apiURL}/api/posts/ai`, {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ content: title }),
+      });
+
+      const json = await res.json();
+
+      if (json?.result.head) setTitle(json.result.head);
+      if (json?.result.description) setDescription(json.result.description);
+    } catch (error) {
+      console.error("AI context generation failed", error);
+      alert("Failed to generate content.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const submitPost = async () => {
+    if (!title.trim() || !description.trim()) {
+      alert("Please fill in all required fields (title & description).");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      let imageData = "";
+      if (imagePreview) {
+        imageData = imagePreview;
+      } else {
+        imageData = "https://via.placeholder.com/150";
+      }
+
+      const postedBy = user?._id;
+
+      const postData = {
+        postedBy,
+        head: title,
+        description,
+        image: imageData,
+        hashtags,
+      };
+
+      const res = await fetch(`${apiURL}/api/posts/post`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        // backend sent an error message
+        const message = data?.message || "Failed to publish post.";
+        throw new Error(message);
+      }
+
+      // success
+      toast.success("Post published.");
+      // reset form
+      setTitle("");
+      setDescription("");
+      setHashtags([]);
+      setCurrentHashtag("");
+      setImagePreview(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+
+      router.push("/dashboard/posts");
+    } catch (error) {
+      console.error("Publish failed:", error);
+      toast.error("Can't publish post");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-[100dvh] bg-[#050508] p-4">
@@ -63,7 +155,12 @@ export default function CreatePost() {
                 >
                   Title
                 </label>
-                <button className="h-7 px-3 text-xs text-white rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 animate-gradient-shadow flex items-center">
+                <button
+                  type="button"
+                  disabled={isLoading}
+                  className="h-7 px-3 text-xs text-white rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 animate-gradient-shadow flex items-center"
+                  onClick={genContext}
+                >
                   <Sparkles className="h-3 w-3 mr-1" /> Generate
                 </button>
               </div>
@@ -84,7 +181,10 @@ export default function CreatePost() {
                 >
                   Description
                 </label>
-                <button className="h-7 px-3 text-xs text-white rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 animate-gradient-shadow flex items-center">
+                <button
+                  type="button"
+                  className="h-7 px-3 text-xs text-white rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 animate-gradient-shadow flex items-center"
+                >
                   <Sparkles className="h-3 w-3 mr-1" /> Generate
                 </button>
               </div>
@@ -185,11 +285,14 @@ export default function CreatePost() {
             Cancel
           </Link>
           <button
+            type="button"
+            onClick={submitPost}
+            disabled={isLoading}
             className="px-4 py-2 rounded-md hover:bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
                    bg-[length:200%_100%] 
-                   animate-gradient-shadow text-white hover:opacity-90 transition-opacity"
+                   animate-gradient-shadow text-white hover:opacity-90 transition-opacity disabled:opacity-60"
           >
-            Publish Post
+            {isLoading ? "Publishing..." : "Publish Post"}
           </button>
         </div>
       </div>

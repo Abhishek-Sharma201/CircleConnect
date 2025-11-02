@@ -39,12 +39,12 @@ const Nav = () => {
   };
 
   return (
-    <div className="w-full h-[10dvh] flex items-center justify-between p-4 border-b border-b-zinc-700 relative bg-transparent backdrop-blur-md">
+    <div className="w-full h-[9.8dvh] flex items-center justify-between p-3 relative bg-transparent">
       <div className="w-[450px] h-full flex items-center justify-start gap-6">
-        <h1 className="text-[.95rem] text-zinc-400 text-center min-w-[60px] max-w-[200px] truncate">
+        <h1 className="text-[.95rem] text-zinc-300 text-center min-w-[60px] max-w-[200px] truncate">
           {path ? path : "/"}
         </h1>
-        <span className="h-full w-[1px] bg-zinc-700" />
+        <span className="h-[70%] w-[1px] bg-zinc-600" />
         <h1>
           <span className="text-[.9rem] text-zinc-300"> Welcome, </span>
           {user?.firstName + " " + user?.lastName}
@@ -53,9 +53,9 @@ const Nav = () => {
 
       <div className="w-[max-content] h-full flex items-center justify-center gap-6 relative">
         <div className="w-[max-content] h-full flex flex-col items-center justify-center">
-          <div className="w-[max-content] h-full flex items-center justify-center rounded-md border gap-2 p-1 border-zinc-800">
+          <div className="w-[max-content] h-[90%] flex items-center justify-center rounded-md gap-2 p-1">
             <button
-              className="h-full  rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
+              className="h-full rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
              bg-[length:200%_100%] 
              animate-gradient-shadow text-[.9rem] py-1 px-2 outline-none"
             >
@@ -67,7 +67,7 @@ const Nav = () => {
               name="search"
               id="search"
               placeholder="Search peoples..."
-              className="h-full w-[300px] px-1 bg-transparent border-none outline-none placeholder:text-zinc-300 placeholder:text-[.9rem] text-zinc-300 text-[.8rem]"
+              className="h-full w-[300px] px-1 bg-transparent border-none outline-none placeholder:text-zinc-300 placeholder:text-[.8rem] text-zinc-300 text-[.8rem]"
               onChange={handleChange}
               value={value}
               autoComplete="false"
