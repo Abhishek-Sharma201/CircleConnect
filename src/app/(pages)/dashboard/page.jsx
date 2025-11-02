@@ -5,7 +5,7 @@ import PostCard from "@/src/components/dashboard/PostCard";
 import Loader from "@/src/components/dashboard/Loader";
 import { apiURL } from "@/src/constants";
 import { toast } from "react-toastify";
-import ShaderAnimation from "@/src/components/21devs/ShaderAnimation";
+import ShaderAnimation from "@/src/components/21stdevs/ShaderAnimation";
 
 const Page = () => {
   const [posts, setPosts] = useState([]);

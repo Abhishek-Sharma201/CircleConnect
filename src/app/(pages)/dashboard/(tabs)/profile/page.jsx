@@ -160,7 +160,7 @@ const Page = () => {
               value={form.firstName}
               onChange={change}
               placeholder="first name"
-              className="bg-transparent text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700"
+              className=" text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-gray-800/40 bg-zinc-950/10 "
               required
             />
           </div>
@@ -172,7 +172,7 @@ const Page = () => {
               value={form.lastName}
               onChange={change}
               placeholder="last name"
-              className="bg-transparent text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700"
+              className=" text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-gray-800/40 bg-zinc-950/10"
               required
             />
           </div>
@@ -184,7 +184,7 @@ const Page = () => {
               value={form.email}
               onChange={change}
               placeholder="email"
-              className="bg-transparent text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700"
+              className=" text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-gray-800/40 bg-zinc-950/10"
               required
             />
           </div>
@@ -197,7 +197,7 @@ const Page = () => {
               onChange={change}
               placeholder="username"
               readOnly
-              className="bg-transparent text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700"
+              className=" text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-gray-800/40 bg-zinc-950/10"
             />
           </div>
           <div className="flex flex-col items-start gap-2">
@@ -208,7 +208,7 @@ const Page = () => {
               value={form.headLine}
               onChange={change}
               placeholder="head line"
-              className="bg-transparent text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700"
+              className=" text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-gray-800/40 bg-zinc-950/10"
               required
             />
           </div>
@@ -220,7 +220,7 @@ const Page = () => {
               value={form.about}
               onChange={change}
               placeholder="about"
-              className="bg-transparent text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-zinc-700"
+              className=" text-zinc-300 rounded-md px-4 py-2 text-[.9rem] border border-gray-800/40 bg-zinc-950/10"
               required
             />
           </div>
@@ -234,7 +234,7 @@ const Page = () => {
           Save
         </button>
       </form>
-      <hr className="w-[1px] h-full bg-zinc-800 border-none dark:bg-zinc-700" />
+      {/* <hr className="w-[1px] h-full bg-zinc-800 border-none dark:bg-zinc-700" /> */}
       <div className="w-full h-full flex flex-col items-start gap-6 px-3 overflow-x-hidden overflow-y-scroll">
         <div className="w-full flex flex-col items-start gap-3 px-4">
           <h1>Your Badges</h1>
@@ -251,7 +251,7 @@ const Page = () => {
                   placeholder="name?"
                   value={newBadge}
                   onChange={handleNewBadgeChange}
-                  className="h-full w-[100px] px-3 rounded-md border border-zinc-600 bg-zinc-950 text-zinc-400 text-[.9rem]"
+                  className="h-full w-[100px] px-3 rounded-md  bg-zinc-950/30 text-zinc-400 text-[.9rem]"
                 />
                 <button
                   type="button"
@@ -283,7 +283,7 @@ const Page = () => {
             you more
           </h6>
         </div>
-        <hr className="w-full h-[1px] bg-zinc-800 border-none dark:bg-zinc-700" />
+        {/* <hr className="w-full h-[1px] bg-zinc-800 border-none dark:bg-zinc-700" /> */}
         <div className="w-full flex flex-col items-start gap-6 px-3 overflow-y-scroll">
           <h1>Posts</h1>
           <div className="grid grid-cols-2 gap-4">

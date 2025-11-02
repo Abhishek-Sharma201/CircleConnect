@@ -62,7 +62,9 @@ const Sidebar = () => {
           onClick={() => setPath("board")}
           className={`w-full ${
             isOpen ? "px-4" : "px-2"
-          } py-2 flex items-center justify-between rounded-md  ${
+          } py-2 flex items-center ${
+            isOpen ? "justify-between" : "justify-center"
+          } rounded-md  ${
             path == "board"
               ? "border-blue-800 bg-blue-950 hover:bg-blue-900 hover:border-blue-700"
               : ""
@@ -83,7 +85,9 @@ const Sidebar = () => {
           onClick={() => setPath("posts")}
           className={`w-full ${
             isOpen ? "px-4" : "px-2"
-          } py-2 flex items-center justify-between rounded-md ${
+          } py-2 flex items-center ${
+            isOpen ? "justify-between" : "justify-center"
+          } rounded-md ${
             path == "posts"
               ? "border-blue-800 bg-blue-950 hover:bg-blue-900 hover:border-blue-700"
               : "bg-zinc-950/30 hover:bg-zinc-900/30"
@@ -104,7 +108,9 @@ const Sidebar = () => {
           onClick={() => setPath("notifications")}
           className={`w-full ${
             isOpen ? "px-4" : "px-2"
-          } py-2 flex items-center justify-between rounded-md  ${
+          } py-2 flex items-center ${
+            isOpen ? "justify-between" : "justify-center"
+          } rounded-md  ${
             path == "notifications"
               ? "border-blue-800 bg-blue-950 hover:bg-blue-900 hover:border-blue-700"
               : "bg-zinc-950/30 hover:bg-zinc-900/30"
@@ -125,7 +131,9 @@ const Sidebar = () => {
           onClick={() => setPath("connections")}
           className={`w-full ${
             isOpen ? "px-4" : "px-2"
-          } py-2 flex items-center justify-between rounded-md  ${
+          } py-2 flex items-center ${
+            isOpen ? "justify-between" : "justify-center"
+          } rounded-md  ${
             path == "connections"
               ? "border-blue-800 bg-blue-950 hover:bg-blue-900 hover:border-blue-700"
               : "bg-zinc-950/30 hover:bg-zinc-900/30"
@@ -148,7 +156,7 @@ const Sidebar = () => {
       <button
         className={`w-full ${isOpen ? "px-4" : "px-2"} py-2 flex items-center ${
           isOpen ? "justify-between" : "justify-center"
-        } rounded-md border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 hover:border-zinc-700`}
+        } rounded-md bg-zinc-950/30 hover:bg-zinc-900/30`}
         onClick={handleLogout}
       >
         {isOpen ? (

@@ -1,4 +1,4 @@
-import ShaderAnimation from "@/src/components/21devs/ShaderAnimation";
+import ShaderAnimation from "@/src/components/21stdevs/ShaderAnimation";
 import Nav from "@/src/components/dashboard/Nav";
 import Sidebar from "@/src/components/dashboard/Sidebar";
 import React from "react";
