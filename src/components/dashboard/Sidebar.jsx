@@ -40,16 +40,20 @@ const Sidebar = () => {
     <div
       id="dashboard"
       className={`${
-        isOpen ? "w-[250px]" : "w-[70px]"
+        isOpen ? "w-[250px]  " : "w-[70px]"
       } h-full flex flex-col items-start justify-start bg-transparent px-2 py-5 gap-[18px]`}
     >
       <div className=" h-[max-content] w-full flex items-center justify-center gap-8 ">
         {isOpen ? <Name /> : ""}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className=" rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
+          className={`rounded-md ${
+            isOpen
+              ? `bg-gradient-to-r from-zinc-900 via-zinc-600 to-zinc-700 
              bg-[length:200%_100%] 
-             animate-gradient-shadow text-[.9rem] py-2 px-2 outline-none h-[max-content] "
+             animate-gradient-shadow`
+              : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
+          } text-[.9rem] py-2 px-2 outline-none h-[max-content]`}
         >
           <ToggleIcon />
         </button>
@@ -66,14 +70,14 @@ const Sidebar = () => {
             isOpen ? "justify-between" : "justify-center"
           } rounded-md  ${
             path == "board"
-              ? "border-blue-800 bg-blue-950 hover:bg-blue-900 hover:border-blue-700"
-              : ""
+              ? " bg-gradient-to-r from-blue-700 via-blue-900 to-blue-950/30 "
+              : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
           }`}
         >
           {isOpen ? (
             <>
-              Board
               <Dashboard />
+              Board
             </>
           ) : (
             <Dashboard />
@@ -89,14 +93,14 @@ const Sidebar = () => {
             isOpen ? "justify-between" : "justify-center"
           } rounded-md ${
             path == "posts"
-              ? "border-blue-800 bg-blue-600 hover:bg-blue-700 hover:border-blue-700"
-              : "bg-zinc-950/30 hover:bg-zinc-900/30"
+              ? "bg-gradient-to-r from-blue-700 via-blue-900 to-blue-950/30"
+              : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
           }`}
         >
           {isOpen ? (
             <>
-              Posts
               <Text h={"16px"} w={"16px"} />
+              Posts
             </>
           ) : (
             <Text h={"16px"} w={"16px"} />
@@ -112,14 +116,14 @@ const Sidebar = () => {
             isOpen ? "justify-between" : "justify-center"
           } rounded-md  ${
             path == "notifications"
-              ? "border-blue-800 bg-blue-600 hover:bg-blue-700 hover:border-blue-700"
-              : "bg-zinc-950/30 hover:bg-zinc-900/30"
+              ? "bg-gradient-to-r from-blue-700 via-blue-900 to-blue-950/30"
+              : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
           }`}
         >
           {isOpen ? (
             <>
-              Notifications
               <Notifications h={"16px"} w={"16px"} />
+              Notifications
             </>
           ) : (
             <Notifications h={"16px"} w={"16px"} />
@@ -135,14 +139,14 @@ const Sidebar = () => {
             isOpen ? "justify-between" : "justify-center"
           } rounded-md  ${
             path == "connections"
-              ? "border-blue-800 bg-blue-600 hover:bg-blue-700 hover:border-blue-700"
-              : "bg-zinc-950/30 hover:bg-zinc-900/30"
+              ? "bg-gradient-to-r from-blue-700 via-blue-900 to-blue-950/30"
+              : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
           }`}
         >
           {isOpen ? (
             <>
-              Connections
               <Node h={"16px"} w={"16px"} />
+              Connections
             </>
           ) : (
             <Node h={"16px"} w={"16px"} />
@@ -154,15 +158,17 @@ const Sidebar = () => {
       {/* <hr className="w-full h-[1px] bg-zinc-800 border-none dark:bg-zinc-700 self-end" /> */}
 
       <button
-        className={`w-full ${isOpen ? "px-4" : "px-2"} py-2 flex items-center text-[.6rem] ${
+        className={`w-full ${
+          isOpen ? "px-4" : "px-2"
+        } py-2 flex items-center text-[.8rem] font-semibold ${
           isOpen ? "justify-between" : "justify-center"
         } rounded-md bg-zinc-950/30 hover:bg-zinc-900/30`}
         onClick={handleLogout}
       >
         {isOpen ? (
           <>
-            Logout
             <Logout />
+            Logout
           </>
         ) : (
           <Logout />
