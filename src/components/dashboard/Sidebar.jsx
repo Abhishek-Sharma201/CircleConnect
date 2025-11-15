@@ -46,12 +46,12 @@ const Sidebar = () => {
       <div className=" h-[max-content] w-full flex items-center justify-center gap-8 ">
         {isOpen ? <Name /> : ""}
         <button
+          title={isOpen ? "close" : "open"}
           onClick={() => setIsOpen(!isOpen)}
           className={`rounded-md ${
             isOpen
-              ? `bg-gradient-to-r from-zinc-900 via-zinc-600 to-zinc-700 
-             bg-[length:200%_100%] 
-             animate-gradient-shadow`
+              ? `bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
+             bg-[length:200%_100%] animate-gradient-shadow `
               : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
           } text-[.9rem] py-2 px-2 outline-none h-[max-content]`}
         >
@@ -62,6 +62,7 @@ const Sidebar = () => {
 
       <ul className=" w-full h-[max-content] p-2 flex flex-col items-center justify-center gap-3 text-[.95rem] ">
         <Link
+          title="board"
           href={"/dashboard"}
           onClick={() => setPath("board")}
           className={`w-full ${
@@ -85,6 +86,7 @@ const Sidebar = () => {
         </Link>
 
         <Link
+          title="posts"
           href={"/dashboard/posts"}
           onClick={() => setPath("posts")}
           className={`w-full ${
@@ -108,6 +110,7 @@ const Sidebar = () => {
         </Link>
 
         <Link
+          title="notifications"
           href={"/dashboard/notifications"}
           onClick={() => setPath("notifications")}
           className={`w-full ${
@@ -131,6 +134,7 @@ const Sidebar = () => {
         </Link>
 
         <Link
+          title="connections"
           href={"/dashboard/connections"}
           onClick={() => setPath("connections")}
           className={`w-full ${
@@ -158,11 +162,12 @@ const Sidebar = () => {
       {/* <hr className="w-full h-[1px] bg-zinc-800 border-none dark:bg-zinc-700 self-end" /> */}
 
       <button
+        title="logout"
         className={`w-full ${
           isOpen ? "px-4" : "px-2"
         } py-2 flex items-center text-[.8rem] font-semibold ${
           isOpen ? "justify-between" : "justify-center"
-        } rounded-md bg-zinc-950/30 hover:bg-zinc-900/30`}
+        } rounded-md bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30 hover:from-zinc-950/30 hover:via-zinc-900 hover:to-zinc-700 transition-colors `}
         onClick={handleLogout}
       >
         {isOpen ? (

@@ -25,8 +25,8 @@ export const ToggleIcon = () => (
 
 export const Logout = () => (
   <svg
-    width="22"
-    height="22"
+    width="16"
+    height="16"
     fill="orange"
     className="bi bi-box-arrow-left"
     viewBox="0 0 16 16"
