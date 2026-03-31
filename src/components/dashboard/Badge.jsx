@@ -1,12 +1,30 @@
 import React from "react";
+import { ShieldCheck, ExternalLink } from "lucide-react";
 
-const Badge = ({ name }) => {
+const Badge = ({ name, isVerifiable, verificationSource, evidenceUrl, verified }) => {
   return (
-    <div
-      id="badge"
-      className=" cursor-pointer rounded-md w-[max-content] h-[5dvh] flex flex-col items-center justify-center border border-zinc-800 border-l-blue-700 border-l-4 px-3 "
-    >
-      <h4 className=" text-[.8rem] text-zinc-300 ">{name}</h4>
+    <div className="pg-badge group relative">
+      {isVerifiable && (
+        <ShieldCheck
+          size={13}
+          className={`shrink-0 ${
+            verified ? "text-[var(--pg-success)]" : "text-[var(--pg-accent)]"
+          }`}
+        />
+      )}
+      <span className="text-pg-text-secondary group-hover:text-pg-text-primary transition-colors">
+        {name}
+      </span>
+      {evidenceUrl && (
+        <a
+          href={evidenceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          <ExternalLink size={11} className="text-pg-text-ghost hover:text-[var(--pg-accent)]" />
+        </a>
+      )}
     </div>
   );
 };

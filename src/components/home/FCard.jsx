@@ -2,10 +2,12 @@ import React from "react";
 
 const FCard = ({ svg, head, description }) => {
   return (
-    <div className=" w-[300px] h-[max-content] flex flex-col items-start justify-start p-4 gap-2 border-r-[2px] border-r-blue-600 ">
-      {svg}
-      <h1 className=" text-[1.2rem] ">{head}</h1>
-      <p className=" text-[.8rem] text-zinc-400 pr-12 ">{description}</p>
+    <div className="flex flex-col items-start justify-start p-5 gap-3 border-l-2 border-l-blue-600/60 bg-white/[0.02] backdrop-blur-sm rounded-r-lg hover:border-l-blue-400 hover:bg-white/[0.04] transition-all duration-200 flex-1 min-w-[220px]">
+      <div className="p-2 rounded-lg bg-blue-600/10 border border-blue-500/20 text-blue-400">
+        {svg}
+      </div>
+      <h2 className="text-[1rem] font-semibold text-[var(--geist-foreground)]">{head}</h2>
+      <p className="text-[0.82rem] text-[var(--accents-5)] leading-relaxed">{description}</p>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { UserProvider } from "../context/userContex";
+import { SocketProvider } from "../context/SocketContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +26,11 @@ export default function RootLayout({ children }) {
     <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID}>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
         >
-          <UserProvider>{children}</UserProvider>
+          <UserProvider>
+            <SocketProvider>{children}</SocketProvider>
+          </UserProvider>
           <ToastContainer />
         </body>
       </html>

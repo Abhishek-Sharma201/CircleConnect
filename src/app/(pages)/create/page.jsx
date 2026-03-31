@@ -7,6 +7,7 @@ import { apiURL } from "@/src/constants";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useAuth } from "@/src/hooks/useAuth";
+import Image from "next/image";
 
 export default function CreatePost() {
   const router = useRouter();
@@ -14,6 +15,13 @@ export default function CreatePost() {
   const [description, setDescription] = useState("");
   const [hashtags, setHashtags] = useState([]);
   const [currentHashtag, setCurrentHashtag] = useState("");
+  const [postType, setPostType] = useState("regular"); // regular, poll, code
+  const [pollQuestion, setPollQuestion] = useState("");
+  const [pollOptions, setPollOptions] = useState(["", ""]);
+  const [codeSnippet, setCodeSnippet] = useState("");
+  const [codeLanguage, setCodeLanguage] = useState("javascript");
+  const [scheduledDate, setScheduledDate] = useState("");
+  const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +31,7 @@ export default function CreatePost() {
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      setImageFile(file);
       const reader = new FileReader();
       reader.onload = () => setImagePreview(reader.result);
       reader.readAsDataURL(file);
@@ -30,6 +39,7 @@ export default function CreatePost() {
   };
 
   const handleRemoveImage = () => {
+    setImageFile(null);
     setImagePreview(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
@@ -49,6 +59,11 @@ export default function CreatePost() {
 
   const genContext = async () => {
     try {
+      if (title.length == 0) {
+        toast.info("enter your prompt in title field");
+        return;
+      }
+
       setIsLoading(true);
 
       const res = await fetch(`${apiURL}/api/posts/ai`, {
@@ -69,6 +84,28 @@ export default function CreatePost() {
     }
   };
 
+  const genImage = async () => {
+    try {
+      if (description.length == 0) {
+        toast.info("describe your image in description");
+        return;
+      }
+
+      const res = await fetch(`${apiURL}/api/posts/imageai`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: { description: description },
+      });
+      if (!res.ok) toast.error("Failed to generate image");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      setImagePreview(url);
+    } catch (error) {
+      toast.error(error.message);
+      console.log(`genImage Err: ${error}`);
+    }
+  };
+
   const submitPost = async () => {
     if (!title.trim() || !description.trim()) {
       alert("Please fill in all required fields (title & description).");
@@ -78,29 +115,43 @@ export default function CreatePost() {
     setIsLoading(true);
 
     try {
-      let imageData = "";
-      if (imagePreview) {
-        imageData = imagePreview;
-      } else {
-        imageData = "https://via.placeholder.com/150";
+      const formData = new FormData();
+      formData.append("postedBy", user?._id);
+      formData.append("head", title);
+      formData.append("description", description);
+      if (imageFile) {
+        formData.append("image", imageFile);
       }
-
-      const postedBy = user?._id;
-
-      const postData = {
-        postedBy,
-        head: title,
-        description,
-        image: imageData,
-        hashtags,
-      };
+      formData.append("tags", JSON.stringify(hashtags));
+      formData.append("type", postType);
+      
+      if (postType === "poll") {
+        formData.append("poll", JSON.stringify({ 
+          question: pollQuestion, 
+          options: pollOptions.filter(o => o).map(text => ({ text })) 
+        }));
+      }
+      
+      if (postType === "code") {
+        formData.append("codeSnippet", JSON.stringify({ 
+          code: codeSnippet, 
+          language: codeLanguage 
+        }));
+      }
+      
+      if (scheduledDate) {
+        formData.append("scheduledDate", scheduledDate);
+        formData.append("status", "scheduled");
+      } else {
+        formData.append("status", "published");
+      }
 
       const res = await fetch(`${apiURL}/api/posts/post`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify(postData),
+        body: formData,
       });
 
       const data = await res.json();
@@ -143,6 +194,13 @@ export default function CreatePost() {
           </h1>
         </div>
 
+        {/* Type Selector */}
+        <div className="flex gap-4 p-5 pb-0">
+            <button onClick={() => setPostType("regular")} className={`px-3 py-1 rounded ${postType === "regular" ? "bg-blue-600 text-white" : "bg-[#131320] text-gray-400"}`}>Post</button>
+            <button onClick={() => setPostType("poll")} className={`px-3 py-1 rounded ${postType === "poll" ? "bg-blue-600 text-white" : "bg-[#131320] text-gray-400"}`}>Poll</button>
+            <button onClick={() => setPostType("code")} className={`px-3 py-1 rounded ${postType === "code" ? "bg-blue-600 text-white" : "bg-[#131320] text-gray-400"}`}>Code</button>
+        </div>
+
         {/* Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-5 overflow-y-auto">
           {/* Left Column: Title & Description */}
@@ -156,12 +214,14 @@ export default function CreatePost() {
                   Title
                 </label>
                 <button
+                  title="Auto generate"
                   type="button"
                   disabled={isLoading}
                   className="h-7 px-3 text-xs text-white rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 animate-gradient-shadow flex items-center"
                   onClick={genContext}
                 >
-                  <Sparkles className="h-3 w-3 mr-1" /> Generate
+                  <Sparkles className="h-3 w-3 mr-1" />{" "}
+                  {isLoading ? "thinking..." : "Generate"}
                 </button>
               </div>
               <input
@@ -181,22 +241,68 @@ export default function CreatePost() {
                 >
                   Description
                 </label>
-                <button
+                {/* <button
                   type="button"
                   className="h-7 px-3 text-xs text-white rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 animate-gradient-shadow flex items-center"
                 >
                   <Sparkles className="h-3 w-3 mr-1" /> Generate
-                </button>
+                </button> */}
               </div>
               <textarea
                 id="description"
                 placeholder="Share your thoughts..."
-                className="w-full min-h-[120px] bg-[#131320] border border-[#1a1a2e] rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full min-h-[150px] bg-[#131320] border border-[#1a1a2e] rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
           </div>
+          
+          {postType === "poll" && (
+             <div className="space-y-4">
+                <input 
+                    placeholder="Ask a question..." 
+                    className="w-full bg-[#131320] border border-[#1a1a2e] rounded-md p-2 text-white"
+                    value={pollQuestion}
+                    onChange={(e) => setPollQuestion(e.target.value)}
+                />
+                {pollOptions.map((opt, idx) => (
+                    <input 
+                        key={idx}
+                        placeholder={`Option ${idx + 1}`}
+                        className="w-full bg-[#131320] border border-[#1a1a2e] rounded-md p-2 text-white"
+                        value={opt}
+                        onChange={(e) => {
+                            const newOpts = [...pollOptions];
+                            newOpts[idx] = e.target.value;
+                            setPollOptions(newOpts);
+                        }}
+                    />
+                ))}
+                <button onClick={() => setPollOptions([...pollOptions, ""])} className="text-blue-400 text-sm">+ Add Option</button>
+             </div>
+          )}
+
+          {postType === "code" && (
+             <div className="space-y-4">
+                <select 
+                    value={codeLanguage} 
+                    onChange={(e) => setCodeLanguage(e.target.value)}
+                    className="w-full bg-[#131320] border border-[#1a1a2e] rounded-md p-2 text-white"
+                >
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                    <option value="css">CSS</option>
+                    <option value="html">HTML</option>
+                </select>
+                <textarea
+                    placeholder="Paste code here..."
+                    className="w-full min-h-[150px] bg-[#131320] border border-[#1a1a2e] rounded-md p-2 text-white font-mono"
+                    value={codeSnippet}
+                    onChange={(e) => setCodeSnippet(e.target.value)}
+                />
+             </div>
+          )}
 
           {/* Right Column: Hashtags & Media */}
           <div className="space-y-6">
@@ -234,12 +340,24 @@ export default function CreatePost() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-300 flex items-center">
-                <ImageIcon className="h-4 w-4 mr-1 text-blue-400" /> Media
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-gray-300 flex items-center">
+                  <ImageIcon className="h-4 w-4 mr-1 text-blue-400" /> Media
+                </label>
+                <button
+                  title="Auto generate"
+                  type="button"
+                  disabled={isLoading}
+                  className="h-7 px-3 text-xs text-white rounded-md bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 animate-gradient-shadow flex items-center"
+                  onClick={genImage}
+                >
+                  <Sparkles className="h-3 w-3 mr-1" />{" "}
+                  {isLoading ? "thinking..." : "Generate"}
+                </button>
+              </div>
               {imagePreview ? (
                 <div className="relative rounded-lg overflow-hidden border border-[#1a1a2e]">
-                  <img
+                  <Image
                     src={imagePreview}
                     alt="Preview"
                     className="w-full h-48 object-cover"
@@ -277,7 +395,13 @@ export default function CreatePost() {
         </div>
 
         {/* Footer */}
-        <div className="flex justify-between border-t border-[#1a1a2e] p-5">
+        <div className="flex justify-between border-t border-[#1a1a2e] p-5 items-center">
+          <input 
+            type="datetime-local" 
+            className="bg-[#131320] text-white p-2 rounded border border-[#1a1a2e]"
+            value={scheduledDate}
+            onChange={(e) => setScheduledDate(e.target.value)}
+          />
           <Link
             href={"/dashboard"}
             className="px-4 py-2 border border-[#1a1a2e] text-gray-300 rounded-md bg-red-500  hover:bg-red-700 transition-colors "

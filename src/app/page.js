@@ -13,17 +13,7 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const handleLoad = () => {
-      setIsLoading(false);
-    };
-
-    if (document.readyState === "complete") {
-      setIsLoading(false);
-    } else {
-      window.addEventListener("load", handleLoad);
-
-      return () => window.removeEventListener("load", handleLoad);
-    }
+    setIsLoading(false);
   }, []);
 
   if (isLoading)
@@ -34,13 +24,15 @@ const Page = () => {
     );
 
   return (
-    <main className="relative w-full h-max-content flex flex-col items-start justify-start">
+    <main className="relative w-full min-h-screen flex flex-col items-start justify-start">
       <Background />
-      <div className="z-[4] w-full h-max-content flex flex-col items-start justify-start">
+      <div className="z-[4] w-full flex flex-col items-start justify-start">
         <Nav />
-        <Hero />
-        <Features />
-        <Footer />
+        <div className="pt-[60px] w-full">
+          <Hero />
+          <Features />
+          <Footer />
+        </div>
       </div>
     </main>
   );

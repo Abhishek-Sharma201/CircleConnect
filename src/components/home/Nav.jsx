@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Name from "../dashboard/Name";
 import Link from "next/link";
@@ -7,27 +8,32 @@ const Nav = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <nav className=" z-[10] h-[10dvh] w-full flex items-center justify-between px-8 lg:px-20 bg-transparent backdrop-blur-md fixed top-0 left-0 ">
+    <nav className="fixed top-0 left-0 z-[10] h-[60px] w-full flex items-center justify-between px-8 lg:px-20 border-b border-white/[0.06] bg-black/40 backdrop-blur-md">
       <Name />
-      <ul className=" h-full w-[max-content] flex items-center justify-between gap-4 ">
+      <ul className="flex items-center gap-3">
         {isAuthenticated ? (
           <Link
-            href={"/dashboard"}
-            className=" px-4 py-2 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
-                   bg-[length:200%_100%] 
-                   animate-gradient-shadow text-white overflow-hidden rounded-md text-[.9rem] "
+            href="/dashboard"
+            className="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-[13px] font-medium rounded-lg transition-colors"
           >
             Dashboard
           </Link>
         ) : (
-          ""
+          <>
+            <Link
+              href="/login"
+              className="px-4 py-1.5 border border-[var(--accents-3)] text-[var(--accents-6)] text-[13px] rounded-lg hover:border-[var(--accents-5)] hover:text-white transition-colors"
+            >
+              Login
+            </Link>
+            <Link
+              href="/signup"
+              className="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-[13px] font-medium rounded-lg transition-colors"
+            >
+              Sign up
+            </Link>
+          </>
         )}
-        <Link
-          href={"/login"}
-          className=" cursor-pointer bg-zinc-900 text-zinc-300 text-[.9rem] border border-zinc-700 px-4 py-2 rounded-md "
-        >
-          Login
-        </Link>
       </ul>
     </nav>
   );

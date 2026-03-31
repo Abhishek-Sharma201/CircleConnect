@@ -10,15 +10,20 @@
   },
   "dependencies": {
     "@react-oauth/google": "^0.12.1",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
     "dotenv": "^16.4.7",
     "framer-motion": "^12.6.3",
+    "gsap": "^3.14.2",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.506.0",
     "next": "16.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-toastify": "^10.0.5",
-    "three": "^0.181.0"
+    "socket.io-client": "^4.8.1",
+    "three": "^0.181.2",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

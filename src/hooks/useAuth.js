@@ -1,43 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { apiURL } from "../constants";
 import { useUser } from "../context/userContex";
 
+/**
+ * Auth hook — reads auth state from UserContext (single source of truth).
+ * The /api/auth/me fetch happens exactly ONCE inside UserProvider at app root.
+ * This hook only provides action functions (login, logout, signup, googleLogin).
+ */
 export const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { user, setUser } = useUser();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          setLoading(false);
-          return;
-        }
-        const response = await fetch(`${apiURL}/api/auth/me`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setIsAuthenticated(true);
-          setUser(data.user);
-        }
-      } catch (error) {
-        console.error("Auth check failed:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, [setUser]);
+  const { user, setUser, loading, isAuthenticated, setIsAuthenticated, refetchUser } = useUser();
 
   const signup = async (form) => {
     try {
@@ -46,15 +18,11 @@ export const useAuth = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
-      // If user already exists (HTTP 409), handle accordingly.
       if (response.status === 409) {
         return { success: false, message: "User already exists" };
       }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
+      return await response.json();
+    } catch {
       return { success: false, message: "Signup failed." };
     }
   };
@@ -66,17 +34,14 @@ export const useAuth = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
       const data = await response.json();
-
       if (data.success) {
         setIsAuthenticated(true);
         setUser(data.user);
         localStorage.setItem("token", data.token);
       }
-
       return data;
-    } catch (error) {
+    } catch {
       return { success: false, message: "Login failed" };
     }
   };
@@ -88,16 +53,14 @@ export const useAuth = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
       });
-
       const data = await response.json();
-
       if (data.success) {
+        setIsAuthenticated(true);
         setUser(data.user);
         localStorage.setItem("token", data.token);
       }
-
       return data;
-    } catch (error) {
+    } catch {
       return { success: false, message: "Google Login failed" };
     }
   };
@@ -112,17 +75,14 @@ export const useAuth = () => {
           Authorization: token ? `Bearer ${token}` : "",
         },
       });
-
       const data = await response.json();
-
       if (data.success) {
         setIsAuthenticated(false);
         setUser(null);
         localStorage.removeItem("token");
       }
-
       return data;
-    } catch (error) {
+    } catch {
       return { success: false, message: "Logout failed" };
     }
   };
@@ -132,6 +92,7 @@ export const useAuth = () => {
     login,
     googleLogin,
     logout,
+    refetchUser,
     isAuthenticated,
     user,
     loading,

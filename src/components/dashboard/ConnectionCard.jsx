@@ -1,39 +1,27 @@
-import Image from "next/image";
-import React from "react";
-import Badge from "./Badge";
+"use client";
 
-const ConnectionCard = ({ image, name, headLine, badges, connections }) => {
+import React from "react";
+import Image from "next/image";
+
+const ConnectionCard = ({ userName, picture, headLine, badges }) => {
   return (
-    <div className=" w-full h-[15dvh] flex flex-col items-start justify-start gap-1 py-2 px-4 rounded-md overflow-hidden border border-zinc-700 ">
-      <div className=" w-full h-full flex items-center justify-start gap-4 ">
-        <Image
-          src={image || ""}
-          alt="pic"
-          height={30}
-          width={40}
-          className=" rounded-full object-contain "
-        />
-        <div className=" w-full h-full flex flex-col items-start justify-center ">
-          <h2 className=" text-zinc-200 text-[1rem] ">{name}</h2>
-          <h4 className=" text-zinc-300 text-[.75rem] max-w-[250px] truncate ">
-            {headLine}
-          </h4>
-        </div>
-        <div className="flex-grow"></div>
-        <div className=" h-full min-w-[max-content] flex items-center justify-center ">
-          {/* <h3 className=" text-zinc-300 text-[1rem] ">{badges[0].name}</h3> */}
-          <Badge name={badges[0].name} />
-          <h5 className=" text-zinc-300 text-[.8rem] ">
-            &nbsp; {"+" + (badges.length - 1) + " more badges"}
-          </h5>
-        </div>
-      </div>
-      <hr className="w-full h-[1px] bg-zinc-900 border-none dark:bg-zinc-800" />
-      <div className=" w-full h-[max-content] flex items-center justify-between gap-2 ">
-        Bottom
-        <h4 className=" text-zinc-300 text-[.7rem] ">
-          {connections.length} connections
+    <div className="pg-card p-4 flex items-center gap-3">
+      <Image
+        src={picture || "/assets/default-profile.jpg"}
+        alt={userName || "User"}
+        width={40}
+        height={40}
+        className="rounded-full object-cover w-10 h-10 ring-1 ring-[var(--pg-border)] shrink-0"
+      />
+      <div className="min-w-0 flex-1">
+        <h4 className="text-sm font-medium text-pg-text-primary truncate">
+          {userName}
         </h4>
+        {headLine && (
+          <p className="text-xs text-pg-text-muted truncate mt-0.5">
+            {headLine}
+          </p>
+        )}
       </div>
     </div>
   );

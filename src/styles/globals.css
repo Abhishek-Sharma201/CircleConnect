@@ -2,85 +2,259 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════
+   PostGrid Design System — Vercel / Geist UI Match
+   ═══════════════════════════════════════════════════════════════ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Geist Light Theme (default) */
+  --geist-background: #ffffff;
+  --geist-foreground: #000000;
+  --geist-selection: #79ffe1;
+  
+  --accents-1: #fafafa;
+  --accents-2: #eaeaea;
+  --accents-3: #999999;
+  --accents-4: #888888;
+  --accents-5: #666666;
+  --accents-6: #444444;
+  --accents-7: #333333;
+  --accents-8: #111111;
+
+  --geist-success-light: #3291ff;
+  --geist-success: #0070f3;
+  --geist-success-dark: #0761d1;
+  --geist-error-light: #ff1a1a;
+  --geist-error: #e00;
+  --geist-error-dark: #c50000;
+  --geist-warning-light: #f7b955;
+  --geist-warning: #f5a623;
+  --geist-warning-dark: #ab570a;
+
+  /* Custom PG colors for Sidebar/Blue Theme */
+  --pg-accent: #0070f3;
+  --pg-accent-subtle: rgba(0, 112, 243, 0.1);
+  --pg-accent-hover: #0761d1;
+  --pg-border: var(--accents-2);
+  --pg-danger: var(--geist-error);
+  --pg-danger-subtle: rgba(224, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --geist-background: #000000;
+    --geist-foreground: #ffffff;
+    --geist-selection: #f81ce5;
+
+    --accents-1: #111111;
+    --accents-2: #333333;
+    --accents-3: #444444;
+    --accents-4: #666666;
+    --accents-5: #888888;
+    --accents-6: #999999;
+    --accents-7: #eaeaea;
+    --accents-8: #fafafa;
+
+    /* Custom PG colors dark mode */
+    --pg-accent: #3291ff;
+    --pg-accent-subtle: rgba(50, 145, 255, 0.15);
+    --pg-accent-hover: #79a6d2;
+    --pg-border: var(--accents-2);
+    --pg-danger: var(--geist-error);
+    --pg-danger-subtle: rgba(224, 0, 0, 0.15);
   }
 }
 
+/* ── Reset ── */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* transition: all 0.5s; */
-  /* outline: 0.5px solid rgb(114, 114, 114); */
 }
 
-*::-webkit-scrollbar {
-  width: 5px;
-}
-
-*::-webkit-scrollbar-track {
-  background: #1e1e1e;
-  border-radius: 10px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #2c62df, #003d83);
-  border-radius: 6px;
-  border: 2px solid #1e1e1e;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #269cf7, #004386);
-}
-
-*::-webkit-scrollbar-corner {
-  background: #1e1e1e;
-}
-
+/* ── Body ── */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--geist-foreground);
+  background: var(--geist-background);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.5;
 }
 
-#dashboard {
-  transition: all 0.4s;
+::selection {
+  background: var(--geist-selection);
+  color: var(--geist-foreground);
 }
 
-#badge {
-  background: linear-gradient(
-    to right,
-    rgba(196, 196, 196, 0.2),
-    rgba(14, 14, 109, 0.23)
-  );
+/* ═══════════════════════════════════════
+   Vercel / Geist Component Utilities
+   ═══════════════════════════════════════ */
+
+/* ── Card ── */
+.geist-card {
+  background: var(--geist-background);
+  border: 1px solid var(--accents-2);
+  border-radius: 6px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-#post_card_img {
-  background: linear-gradient(
-    to bottom,
-    transparent 30%,
-    rgba(139, 139, 139, 0.1) 60%,
-    rgba(10, 10, 10, 0.8) 80%,
-    rgb(0, 0, 0) 100%
-  );
+.geist-card:hover {
+  border-color: var(--accents-5);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
 }
 
-.createPostForm {
-  background: linear-gradient(
-    to bottom,
-    rgb(32, 32, 32),
-    rgb(17, 17, 17),
-    rgb(0, 0, 0)
-  );
-  box-shadow: 1px 1px 50px rgb(39, 39, 39);
-  border-left: 1px solid rgb(0, 81, 255);
-  border-top: 1px solid rgb(0, 81, 255);
+/* ── Form Inputs ── */
+.geist-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--geist-background);
+  border: 1px solid var(--accents-2);
+  border-radius: 6px;
+  color: var(--geist-foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.geist-input::placeholder {
+  color: var(--accents-3);
+}
+
+.geist-input:focus {
+  border-color: var(--accents-5);
+  box-shadow: 0 0 0 1px var(--geist-foreground);
+}
+
+.geist-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.geist-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--accents-5);
+  margin-bottom: 8px;
+}
+
+/* ── Buttons ── */
+.geist-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  height: 40px;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  white-space: nowrap;
+}
+
+.geist-btn-sm {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 0.75rem;
+}
+
+/* Primary */
+.geist-btn-primary {
+  background: var(--pg-accent);
+  color: #fff;
+  border: 1px solid var(--pg-accent);
+  transition: all 0.2s ease;
+}
+
+.geist-btn-primary:hover {
+  background: var(--pg-accent-hover);
+  border-color: var(--pg-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--pg-accent-subtle);
+}
+
+/* Secondary */
+.geist-btn-secondary {
+  background: var(--geist-background);
+  color: var(--accents-5);
+  border: 1px solid var(--accents-2);
+}
+
+.geist-btn-secondary:hover {
+  color: var(--geist-foreground);
+  border-color: var(--geist-foreground);
+}
+
+/* Ghost */
+.geist-btn-ghost {
+  background: transparent;
+  color: var(--accents-5);
+  border: 1px solid transparent;
+}
+
+.geist-btn-ghost:hover {
+  background: var(--accents-1);
+  color: var(--geist-foreground);
+}
+
+/* Danger */
+.geist-btn-danger {
+  background: var(--geist-background);
+  color: var(--geist-error);
+  border: 1px solid var(--accents-2);
+}
+
+.geist-btn-danger:hover {
+  color: var(--geist-background);
+  background: var(--geist-error);
+  border-color: var(--geist-error);
+}
+
+/* ── Section Header ── */
+.geist-section-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--geist-foreground);
+}
+
+/* ── Divider ── */
+.geist-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--accents-2);
+  border: none;
+}
+
+/* ── Scrollbar Hide ── */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Custom Global Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accents-3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accents-5);
 }

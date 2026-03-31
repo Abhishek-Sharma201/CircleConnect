@@ -2,25 +2,42 @@
 
 import React, { useState } from "react";
 import Name from "./Name";
-import {
-  Dashboard,
-  Logout,
-  Moon,
-  Node,
-  Notifications,
-  Text,
-  ToggleIcon,
-} from "@/src/utils/SVG";
 import Link from "next/link";
 import { useAuth } from "@/src/hooks/useAuth";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  FileText,
+  Bell,
+  Users,
+  Search,
+  User,
+  GraduationCap,
+  Bookmark,
+  PenSquare,
+  Shield,
+  LogOut,
+  PanelLeftClose,
+  PanelLeft,
+} from "lucide-react";
+
+const navItems = [
+  { id: "board", label: "Board", href: "/dashboard", icon: LayoutDashboard },
+  { id: "posts", label: "Posts", href: "/dashboard/posts", icon: FileText },
+  { id: "notifications", label: "Notifications", href: "/dashboard/notifications", icon: Bell },
+  { id: "connections", label: "Connections", href: "/dashboard/connections", icon: Users },
+  { id: "search", label: "Search", href: "/dashboard/search", icon: Search },
+  { id: "profile", label: "Profile", href: "/dashboard/profile", icon: User },
+
+  { id: "collections", label: "Collections", href: "/dashboard/collections", icon: Bookmark },
+];
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
+  const pathname = usePathname();
   const { logout } = useAuth();
-  const [path, setPath] = useState("board");
 
   const handleLogout = async () => {
     try {
@@ -36,150 +53,105 @@ const Sidebar = () => {
     }
   };
 
+  const isActive = (href) => {
+    if (href === "/dashboard") return pathname === "/dashboard";
+    return pathname.startsWith(href);
+  };
+
   return (
-    <div
+    <aside
       id="dashboard"
       className={`${
-        isOpen ? "w-[250px]  " : "w-[70px]"
-      } h-full flex flex-col items-start justify-start bg-transparent px-2 py-5 gap-[18px]`}
+        isOpen ? "w-[200px]" : "w-[64px]"
+      } h-full flex flex-col bg-pg-raised border-r border-pg shrink-0 transition-all duration-300 ease-in-out`}
     >
-      <div className=" h-[max-content] w-full flex items-center justify-center gap-8 ">
-        {isOpen ? <Name /> : ""}
+      {/* Header */}
+      <div className={`flex items-center ${isOpen ? "justify-between px-4" : "justify-center px-2"} py-5 shrink-0`}>
+        {isOpen && <Name />}
         <button
-          title={isOpen ? "close" : "open"}
+          title={isOpen ? "Collapse sidebar" : "Expand sidebar"}
           onClick={() => setIsOpen(!isOpen)}
-          className={`rounded-md ${
-            isOpen
-              ? `bg-gradient-to-r from-blue-900 via-blue-600 to-blue-700 
-             bg-[length:200%_100%] animate-gradient-shadow `
-              : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
-          } text-[.9rem] py-2 px-2 outline-none h-[max-content]`}
+          className="p-2 rounded-md text-pg-text-secondary hover:text-pg-text-primary hover:bg-pg-hover transition-all duration-150"
         >
-          <ToggleIcon />
+          {isOpen ? <PanelLeftClose size={18} /> : <PanelLeft size={18} />}
         </button>
       </div>
-      {/* <hr className="w-full h-[1px] bg-zinc-800 border-none dark:bg-zinc-700" /> */}
 
-      <ul className=" w-full h-[max-content] p-2 flex flex-col items-center justify-center gap-3 text-[.95rem] ">
+      {/* Divider */}
+      <div className="mx-3 h-px bg-[var(--pg-border)]" />
+
+      {/* Main Nav */}
+      <nav className="flex-1 overflow-y-auto py-3 px-2">
+        <ul className="flex flex-col gap-1">
+          {navItems.map((item) => {
+            const active = isActive(item.href);
+            const Icon = item.icon;
+            return (
+              <li key={item.id}>
+                <Link
+                  href={item.href}
+                  title={item.label}
+                  className={`relative flex items-center gap-3 ${
+                    isOpen ? "px-3" : "justify-center px-2"
+                  } py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group ${
+                    active
+                      ? "bg-[var(--pg-accent-subtle)] text-[var(--pg-accent-hover)]"
+                      : "text-pg-text-secondary hover:text-pg-text-primary hover:bg-pg-hover"
+                  }`}
+                >
+                  {/* Left-edge active indicator */}
+                  {active && (
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-[var(--pg-accent)]" />
+                  )}
+                  <Icon size={18} strokeWidth={active ? 2 : 1.5} className="shrink-0" />
+                  {isOpen && (
+                    <span className="truncate transition-opacity duration-200">
+                      {item.label}
+                    </span>
+                  )}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* Divider */}
+        <div className="mx-1 my-3 h-px bg-[var(--pg-border)]" />
+
+        {/* Create Post */}
         <Link
-          title="board"
-          href={"/dashboard"}
-          onClick={() => setPath("board")}
-          className={`w-full ${
-            isOpen ? "px-4" : "px-2"
-          } py-2 flex items-center ${
-            isOpen ? "justify-between" : "justify-center"
-          } rounded-md  ${
-            path == "board"
-              ? " bg-gradient-to-r from-blue-700 via-blue-900 to-blue-950/30 "
-              : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
+          href="/dashboard/create"
+          title="Create Post"
+          className={`flex items-center gap-3 ${
+            isOpen ? "px-3" : "justify-center px-2"
+          } py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+            pathname.startsWith("/dashboard/create")
+              ? "bg-[var(--pg-accent-subtle)] text-[var(--pg-accent-hover)]"
+              : "text-[var(--pg-accent)] hover:bg-[var(--pg-accent-subtle)]"
           }`}
         >
-          {isOpen ? (
-            <>
-              <Dashboard />
-              Board
-            </>
-          ) : (
-            <Dashboard />
-          )}
+          <PenSquare size={18} strokeWidth={1.5} className="shrink-0" />
+          {isOpen && <span>Create Post</span>}
         </Link>
 
-        <Link
-          title="posts"
-          href={"/dashboard/posts"}
-          onClick={() => setPath("posts")}
-          className={`w-full ${
-            isOpen ? "px-4" : "px-2"
-          } py-2 flex items-center ${
-            isOpen ? "justify-between" : "justify-center"
-          } rounded-md ${
-            path == "posts"
-              ? "bg-gradient-to-r from-blue-700 via-blue-900 to-blue-950/30"
-              : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
-          }`}
+
+      </nav>
+
+      {/* Bottom: Logout */}
+      <div className="shrink-0 px-2 pb-4">
+        <div className="mx-1 mb-3 h-px bg-[var(--pg-border)]" />
+        <button
+          title="Logout"
+          onClick={handleLogout}
+          className={`w-full flex items-center gap-3 ${
+            isOpen ? "px-3" : "justify-center px-2"
+          } py-2.5 rounded-lg text-sm font-medium text-pg-text-secondary hover:text-[var(--pg-danger)] hover:bg-[var(--pg-danger-subtle)] transition-all duration-150`}
         >
-          {isOpen ? (
-            <>
-              <Text h={"16px"} w={"16px"} />
-              Posts
-            </>
-          ) : (
-            <Text h={"16px"} w={"16px"} />
-          )}
-        </Link>
-
-        <Link
-          title="notifications"
-          href={"/dashboard/notifications"}
-          onClick={() => setPath("notifications")}
-          className={`w-full ${
-            isOpen ? "px-4" : "px-2"
-          } py-2 flex items-center ${
-            isOpen ? "justify-between" : "justify-center"
-          } rounded-md  ${
-            path == "notifications"
-              ? "bg-gradient-to-r from-blue-700 via-blue-900 to-blue-950/30"
-              : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
-          }`}
-        >
-          {isOpen ? (
-            <>
-              <Notifications h={"16px"} w={"16px"} />
-              Notifications
-            </>
-          ) : (
-            <Notifications h={"16px"} w={"16px"} />
-          )}
-        </Link>
-
-        <Link
-          title="connections"
-          href={"/dashboard/connections"}
-          onClick={() => setPath("connections")}
-          className={`w-full ${
-            isOpen ? "px-4" : "px-2"
-          } py-2 flex items-center ${
-            isOpen ? "justify-between" : "justify-center"
-          } rounded-md  ${
-            path == "connections"
-              ? "bg-gradient-to-r from-blue-700 via-blue-900 to-blue-950/30"
-              : "bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30"
-          }`}
-        >
-          {isOpen ? (
-            <>
-              <Node h={"16px"} w={"16px"} />
-              Connections
-            </>
-          ) : (
-            <Node h={"16px"} w={"16px"} />
-          )}
-        </Link>
-      </ul>
-
-      <div className="flex-grow"></div>
-      {/* <hr className="w-full h-[1px] bg-zinc-800 border-none dark:bg-zinc-700 self-end" /> */}
-
-      <button
-        title="logout"
-        className={`w-full ${
-          isOpen ? "px-4" : "px-2"
-        } py-2 flex items-center text-[.8rem] font-semibold ${
-          isOpen ? "justify-between" : "justify-center"
-        } rounded-md bg-gradient-to-r from-zinc-700 via-zinc-900 to-zinc-950/30 hover:from-zinc-950/30 hover:via-zinc-900 hover:to-zinc-700 transition-colors `}
-        onClick={handleLogout}
-      >
-        {isOpen ? (
-          <>
-            <Logout />
-            Logout
-          </>
-        ) : (
-          <Logout />
-        )}
-      </button>
-    </div>
+          <LogOut size={18} strokeWidth={1.5} className="shrink-0" />
+          {isOpen && <span>Logout</span>}
+        </button>
+      </div>
+    </aside>
   );
 };
 
