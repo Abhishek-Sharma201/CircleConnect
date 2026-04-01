@@ -8,13 +8,13 @@ const Nav = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <nav className="fixed top-0 left-0 z-[10] h-[60px] w-full flex items-center justify-between px-8 lg:px-20 border-b border-white/[0.06] bg-black/40 backdrop-blur-md">
+    <nav className="fixed top-0 left-0 z-[10] h-[60px] w-full flex items-center justify-between px-8 lg:px-20 backdrop-blur-md ">
       <Name />
       <ul className="flex items-center gap-3">
         {isAuthenticated ? (
           <Link
             href="/dashboard"
-            className="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-[13px] font-medium rounded-lg transition-colors"
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-[13px] font-medium rounded-lg transition-colors"
           >
             Dashboard
           </Link>

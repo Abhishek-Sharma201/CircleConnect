@@ -23,10 +23,10 @@ const Hero = () => {
       {/* Left: main content */}
       <div className="flex flex-col items-start justify-center gap-6 max-w-lg z-10">
         {/* Badge */}
-        <div ref={badgeRef} className="opacity-0 flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm">
+        {/* <div ref={badgeRef} className="opacity-0 flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm">
           <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
           <span className="text-[12px] text-blue-300 font-medium tracking-wide">Professional Social Platform</span>
-        </div>
+        </div> */}
 
         {/* Headline */}
         <h1 ref={headlineRef} className="opacity-0 text-[3.2rem] md:text-[4rem] font-bold leading-[1.1] tracking-tight text-white">
@@ -42,15 +42,15 @@ const Hero = () => {
             "Build Your Profile",
             "Learn & Grow",
           ]}
-          mainClassName="px-3 py-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-300 font-semibold text-[1rem] overflow-hidden rounded-lg backdrop-blur-sm"
+          mainClassName="px-4 py-2 transparent backdrop-blur-lg text-blue-100 font-[500] text-[.8rem] overflow-hidden rounded-lg"
           staggerFrom="last"
           initial={{ y: "100%" }}
           animate={{ y: 0 }}
           exit={{ y: "-120%" }}
           staggerDuration={0.025}
           splitLevelClassName="overflow-hidden pb-0.5"
-          transition={{ type: "spring", damping: 30, stiffness: 400 }}
-          rotationInterval={2200}
+          transition={{ type: "spring", damping: 50, stiffness: 600 }}
+          rotationInterval={3400}
         />
 
         {/* Subtext */}

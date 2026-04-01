@@ -109,7 +109,7 @@ const Feed = () => {
       </div>
 
       {/* Posts — single column on mobile, masonry on sm+ */}
-      <div className="columns-1 sm:columns-2 gap-6">
+      <div className="columns-1 sm:columns-3 gap-6">
         {posts.map((post) => (
           <PostCard
             key={post._id}
