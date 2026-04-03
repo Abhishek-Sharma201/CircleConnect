@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { UserProvider } from "../context/userContex";
 import { SocketProvider } from "../context/SocketContext";
+import GlobalLoader from "@/src/components/GlobalLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
         >
+          <GlobalLoader />
           <UserProvider>
             <SocketProvider>{children}</SocketProvider>
           </UserProvider>

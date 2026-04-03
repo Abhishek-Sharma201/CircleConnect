@@ -5,12 +5,12 @@ const Name = ({ className }) => {
   const router = useRouter();
 
   return (
-    <h1
-      className={` whitespace-nowrap cursor-pointer ${className} `}
+    <div
+      className={`flex items-center gap-2 cursor-pointer ${className}`}
       onClick={() => router.push("/")}
     >
-      PostGrid
-    </h1>
+      <img src="/assets/pg%20logo.svg" alt="PostGrid Logo" className="w-32 h-32 object-contain" />
+    </div>
   );
 };
 

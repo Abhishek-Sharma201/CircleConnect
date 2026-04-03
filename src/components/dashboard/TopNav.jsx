@@ -76,15 +76,10 @@ const TopNav = () => {
       {/* Left: Logo and Breadcrumb */}
       <div className="flex items-center gap-4">
         <Link href="/dashboard" className="flex items-center gap-2">
-          {/* Vercel-like simple logo - perhaps a triangle or PostGrid text */}
-          <div className="w-8 h-8 bg-[var(--geist-foreground)] text-[var(--geist-background)] flex items-center justify-center rounded-md font-bold text-xl leading-none">
-            &#x25B2;
-          </div>
+          <img src="/assets/pg%20logo.svg" alt="PostGrid Logo" className="w-28 h-28 object-contain" />
         </Link>
         <div className="h-6 w-px bg-[var(--accents-2)] rotate-[20deg]" />
         <div className="flex items-center gap-2 text-sm font-medium">
-          <span className="text-[var(--geist-foreground)]">PostGrid</span>
-          <span className="text-[var(--accents-4)]">/</span>
           <span className="text-[var(--accents-5)]">{getBreadcrumb()}</span>
         </div>
       </div>

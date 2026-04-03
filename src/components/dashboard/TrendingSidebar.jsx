@@ -41,6 +41,8 @@ const TrendingSidebar = () => {
         {displayTopics.map((topic, idx) => (
           <button
             key={idx}
+            suppressHydrationWarning
+
             onClick={() => handleTopicClick(topic.name || topic)}
             className="flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg hover:bg-[var(--accents-1)] transition-all duration-150 group w-full text-left"
           >

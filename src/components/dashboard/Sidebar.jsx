@@ -61,13 +61,12 @@ const Sidebar = () => {
   return (
     <aside
       id="dashboard"
-      className={`${
-        isOpen ? "w-[200px]" : "w-[64px]"
-      } h-full flex flex-col bg-pg-raised border-r border-pg shrink-0 transition-all duration-300 ease-in-out`}
+      className={`${isOpen ? "w-[200px]" : "w-[64px]"
+        } h-full flex flex-col bg-pg-raised border-r border-pg shrink-0 transition-all duration-300 ease-in-out`}
     >
       {/* Header */}
       <div className={`flex items-center ${isOpen ? "justify-between px-4" : "justify-center px-2"} py-5 shrink-0`}>
-        {isOpen && <Name />}
+        {isOpen && "Dashboard"}
         <button
           title={isOpen ? "Collapse sidebar" : "Expand sidebar"}
           onClick={() => setIsOpen(!isOpen)}
@@ -91,13 +90,11 @@ const Sidebar = () => {
                 <Link
                   href={item.href}
                   title={item.label}
-                  className={`relative flex items-center gap-3 ${
-                    isOpen ? "px-3" : "justify-center px-2"
-                  } py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group ${
-                    active
+                  className={`relative flex items-center gap-3 ${isOpen ? "px-3" : "justify-center px-2"
+                    } py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group ${active
                       ? "bg-[var(--pg-accent-subtle)] text-[var(--pg-accent-hover)]"
                       : "text-pg-text-secondary hover:text-pg-text-primary hover:bg-pg-hover"
-                  }`}
+                    }`}
                 >
                   {/* Left-edge active indicator */}
                   {active && (
@@ -122,13 +119,11 @@ const Sidebar = () => {
         <Link
           href="/dashboard/create"
           title="Create Post"
-          className={`flex items-center gap-3 ${
-            isOpen ? "px-3" : "justify-center px-2"
-          } py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
-            pathname.startsWith("/dashboard/create")
+          className={`flex items-center gap-3 ${isOpen ? "px-3" : "justify-center px-2"
+            } py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${pathname.startsWith("/dashboard/create")
               ? "bg-[var(--pg-accent-subtle)] text-[var(--pg-accent-hover)]"
               : "text-[var(--pg-accent)] hover:bg-[var(--pg-accent-subtle)]"
-          }`}
+            }`}
         >
           <PenSquare size={18} strokeWidth={1.5} className="shrink-0" />
           {isOpen && <span>Create Post</span>}
@@ -143,9 +138,8 @@ const Sidebar = () => {
         <button
           title="Logout"
           onClick={handleLogout}
-          className={`w-full flex items-center gap-3 ${
-            isOpen ? "px-3" : "justify-center px-2"
-          } py-2.5 rounded-lg text-sm font-medium text-pg-text-secondary hover:text-[var(--pg-danger)] hover:bg-[var(--pg-danger-subtle)] transition-all duration-150`}
+          className={`w-full flex items-center gap-3 ${isOpen ? "px-3" : "justify-center px-2"
+            } py-2.5 rounded-lg text-sm font-medium text-pg-text-secondary hover:text-[var(--pg-danger)] hover:bg-[var(--pg-danger-subtle)] transition-all duration-150`}
         >
           <LogOut size={18} strokeWidth={1.5} className="shrink-0" />
           {isOpen && <span>Logout</span>}

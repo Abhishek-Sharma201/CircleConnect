@@ -4,8 +4,8 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className=" w-full h-[max-content] flex items-start justify-start gap-[10rem] px-20 py-24 backdrop-blur-md ">
-      <div className=" w-[max-content] h-full px-4 flex flex-col items-center justify-center ">
-        <h1 className=" text-[2rem] ">PostGrid</h1>
+      <div className=" w-[max-content] h-full flex flex-col items-center justify-center gap-2">
+        <img src="/assets/pg%20logo.svg" alt="PostGrid Logo" className="w-32 h-32 object-contain" />
       </div>
       <div className=" h-full w-[max-content] flex items-start justify-start gap-8 ">
         <div className=" w-[max-content] h-full p-2 gap-1 flex flex-col items-start justify-center text-[.8rem] font-medium ">
